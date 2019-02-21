@@ -32,7 +32,7 @@ public class ZTimeUtils {
     public static final int FORMAT_TYPE_Hm = 2;
 
 
-    @IntDef({FORMAT_TYPE_yMdHmS})
+    @IntDef({FORMAT_TYPE_yMdHmS,FORMAT_TYPE_yMdHm,FORMAT_TYPE_Hm})
     @Retention(RetentionPolicy.SOURCE)
     public @interface FormatType {
     }
