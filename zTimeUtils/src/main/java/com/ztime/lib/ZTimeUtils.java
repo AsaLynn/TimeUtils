@@ -4,7 +4,6 @@ import android.support.annotation.IntDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,9 +17,20 @@ import java.util.Locale;
 public class ZTimeUtils {
 
     /**
-     *  类型{@link #yMdHmS}:为24小时制日期格式:yyyy-MM-dd HH:mm:ss.
+     * 类型{@link #yMdHmS}:为24小时制日期格式:yyyy-MM-dd HH:mm:ss.
      */
     public static final int FORMAT_TYPE_yMdHmS = 0;
+
+    /**
+     * 类型{@link #yMdHm}:为24小时制日期格式:yyyy-MM-dd HH:mm.
+     */
+    public static final int FORMAT_TYPE_yMdHm = 1;
+
+    /**
+     * 类型{@link #Hm}:为24小时制日期格式:HH:mm.
+     */
+    public static final int FORMAT_TYPE_Hm = 2;
+
 
     @IntDef({FORMAT_TYPE_yMdHmS})
     @Retention(RetentionPolicy.SOURCE)
@@ -30,38 +40,64 @@ public class ZTimeUtils {
     /**
      * 将时间戳转换为日期字符串.
      *
-     * @param time  时间戳
-     * @param formatType    格式化类型See {@link #FORMAT_TYPE_yMdHmS}
-     *
-     * @return  格式为yyyy-MM-dd HH:mm:ss的时间字符串.
+     * @param time       时间戳
+     * @param formatType 格式化类型: One of {@link #FORMAT_TYPE_yMdHmS}, {@link #FORMAT_TYPE_yMdHm}, or {@link #FORMAT_TYPE_yMdHm}.
+     * @return 格式为yyyy-MM-dd HH:mm:ss的时间字符串.
      */
     public static String stampToDate(long time, @FormatType int formatType) {
         String res;
         Date date = new Date(time);
-        res = yMdHmS.format(date);
+        if (formatType == FORMAT_TYPE_yMdHmS) {
+            res = yMdHmS.format(date);
+        } else if (formatType == FORMAT_TYPE_yMdHm) {
+            res = yMdHm.format(date);
+        } else if (formatType == FORMAT_TYPE_Hm) {
+            res = Hm.format(date);
+        } else {
+            res = yMdHmS.format(date);
+        }
         return res;
     }
 
-    private static final int TIME_UNIT_SECOND = 1;
-    private static final int TIME_UNIT_MINUTIUE = TIME_UNIT_SECOND * 60;//分钟
-    private static final int TIME_UNIT_HOUR = TIME_UNIT_MINUTIUE * 60;//小时
-    private static final int TIME_UNIT_DAY = TIME_UNIT_HOUR * 24;//天
-    private static final int TIME_UNIT_YEAR = TIME_UNIT_DAY * 365;//年
+    /**
+     * 判断是否为同一天
+     *
+     * @param time1 时间戳1
+     * @param time2 时间戳2
+     * @return boolean
+     */
+    public static boolean isSameDay(long time1, long time2) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(time1));
+        int day1 = calendar.get(Calendar.DAY_OF_YEAR);
+        calendar.setTime(new Date(time2));
+        int day2 = calendar.get(Calendar.DAY_OF_YEAR);
+        return day1 == day2;
+    }
+
 
     /**
      * 年月日时分秒,格式为24小时制日期格式:yyyy-MM-dd HH:mm:ss
      */
     private static SimpleDateFormat yMdHmS = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    //年月日时分
+
+    /**
+     * 年月日时分,格式为24小时制日期格式:yyyy-MM-dd HH:mm
+     */
     private static SimpleDateFormat yMdHm = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+    /**
+     * 24小时制时分,格式为24小时制日期格式:HH:mm
+     */
+    private static SimpleDateFormat Hm = new SimpleDateFormat("HH:mm");
+
 
     //年月日
     private static SimpleDateFormat yMd = new SimpleDateFormat("yyyy-MM-dd");
 
     //24小时制月日时分
     private static SimpleDateFormat MdHm = new SimpleDateFormat("MM-dd HH:mm");
-    //24小时制时分
-    private static SimpleDateFormat hourMinuteFormat = new SimpleDateFormat("HH:mm");
+
 
     //12小时制时分
     private static SimpleDateFormat hourminuteFormat = new SimpleDateFormat("hh:mm");
@@ -113,32 +149,18 @@ public class ZTimeUtils {
      */
     public static String getHourMinTime() {
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-        String str = hourMinuteFormat.format(curDate);
+        String str = Hm.format(curDate);
         return str;
     }
 
     @Deprecated
     public static String getHourMinutesTime() {
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-        String str = hourMinuteFormat.format(curDate);
+        String str = Hm.format(curDate);
         return str;
     }
 
-    /**
-     * 判断是否为同一天
-     *
-     * @param time1 时间戳
-     * @param time2 时间戳
-     * @return boolean
-     */
-    public static boolean isSameDay(long time1, long time2) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date(time1));
-        int day1 = calendar.get(Calendar.DAY_OF_YEAR);
-        calendar.setTime(new Date(time2));
-        int day2 = calendar.get(Calendar.DAY_OF_YEAR);
-        return day1 == day2;
-    }
+
 
     /**
      * 得到现在分钟
@@ -260,16 +282,6 @@ public class ZTimeUtils {
 
 
     /**
-     * 年月日时分
-     *
-     * @param l 时间戳
-     * @return 时间字符串
-     */
-    public static String formatTIme(long l) {
-        return yMdHm.format(l);
-    }
-
-    /**
      * 年月日时分秒:yyyy-MM-dd HH:mm:ss
      *
      * @param l 时间戳
@@ -325,7 +337,7 @@ public class ZTimeUtils {
                 //是一个月的，判断是不是当天的
                 if ((stampFormat.substring(8, 10).equals((currentFormat.substring(8, 10))))) {
                     //是当天的，显示时分
-                    time = hourMinuteFormat.format(stamp);
+                    time = Hm.format(stamp);
                 } else {
                     //是昨天的，显示为昨天
 //                    if (Integer.parseInt(stampFormat.substring(8, 10)) + 1 == Integer.parseInt(currentFormat.substring(8, 10))) {
@@ -420,7 +432,7 @@ public class ZTimeUtils {
                 if ((stampFormat.substring(8, 10).equals((currentFormat.substring(8, 10))))) {
                     //是当天的，显示凌晨上午下午晚上+时分
                     if (Integer.parseInt(stampFormat.substring(11, 13)) <= 6) {
-                        time = "凌晨 " + hourMinuteFormat.format(stamp);
+                        time = "凌晨 " + Hm.format(stamp);
                     } else if (Integer.parseInt(stampFormat.substring(11, 13)) <= 11) {
                         time = "上午" + hourminuteFormat.format(stamp);
                     } else if (Integer.parseInt(stampFormat.substring(11, 13)) <= 17) {
@@ -431,7 +443,7 @@ public class ZTimeUtils {
                 } else {
                     //是昨天的，显示为昨天时分
                     if (Integer.parseInt(stampFormat.substring(8, 10)) + 1 == Integer.parseInt(currentFormat.substring(8, 10))) {
-                        time = "昨天" + hourMinuteFormat.format(stamp);
+                        time = "昨天" + Hm.format(stamp);
                     } else {
                         //不是昨天的,显示月日时分
                         time = MdHm.format(stamp);
@@ -501,4 +513,21 @@ public class ZTimeUtils {
         res = simpleDateFormat.format(date);
         return res;
     }
+
+    /**
+     * 年月日时分
+     *
+     * @param l 时间戳
+     * @return 时间字符串
+     */
+    @Deprecated
+    public static String formatTIme(long l) {
+        return yMdHm.format(l);
+    }
+
+    private static final int TIME_UNIT_SECOND = 1;
+    private static final int TIME_UNIT_MINUTIUE = TIME_UNIT_SECOND * 60;//分钟
+    private static final int TIME_UNIT_HOUR = TIME_UNIT_MINUTIUE * 60;//小时
+    private static final int TIME_UNIT_DAY = TIME_UNIT_HOUR * 24;//天
+    private static final int TIME_UNIT_YEAR = TIME_UNIT_DAY * 365;//年
 }
