@@ -1,5 +1,10 @@
 package com.ztime.lib;
 
+import android.support.annotation.IntDef;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,13 +17,40 @@ import java.util.Locale;
  */
 public class ZTimeUtils {
 
+    /**
+     *  类型{@link #yMdHmS}:为24小时制日期格式:yyyy-MM-dd HH:mm:ss.
+     */
+    public static final int FORMAT_TYPE_yMdHmS = 0;
+
+    @IntDef({FORMAT_TYPE_yMdHmS})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface FormatType {
+    }
+
+    /**
+     * 将时间戳转换为日期字符串.
+     *
+     * @param time  时间戳
+     * @param formatType    格式化类型See {@link #FORMAT_TYPE_yMdHmS}
+     *
+     * @return  格式为yyyy-MM-dd HH:mm:ss的时间字符串.
+     */
+    public static String stampToDate(long time, @FormatType int formatType) {
+        String res;
+        Date date = new Date(time);
+        res = yMdHmS.format(date);
+        return res;
+    }
+
     private static final int TIME_UNIT_SECOND = 1;
     private static final int TIME_UNIT_MINUTIUE = TIME_UNIT_SECOND * 60;//分钟
     private static final int TIME_UNIT_HOUR = TIME_UNIT_MINUTIUE * 60;//小时
     private static final int TIME_UNIT_DAY = TIME_UNIT_HOUR * 24;//天
     private static final int TIME_UNIT_YEAR = TIME_UNIT_DAY * 365;//年
 
-    //年月日时分秒
+    /**
+     * 年月日时分秒,格式为24小时制日期格式:yyyy-MM-dd HH:mm:ss
+     */
     private static SimpleDateFormat yMdHmS = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     //年月日时分
     private static SimpleDateFormat yMdHm = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -50,7 +82,7 @@ public class ZTimeUtils {
     /**
      * 获取当前年月日格式的时间,例如:yyyy-MM-dd
      *
-     * @return  日期时间
+     * @return 日期时间
      */
     public static String getCurrentYearMonthDayTime() {
         Date curDate = new Date(System.currentTimeMillis());
@@ -73,6 +105,7 @@ public class ZTimeUtils {
             return "PM";
         }
     }
+
     /**
      * 获取当前时分格式的时间,例如:11:25
      *
@@ -94,9 +127,9 @@ public class ZTimeUtils {
     /**
      * 判断是否为同一天
      *
-     * @param time1    时间戳
+     * @param time1 时间戳
      * @param time2 时间戳
-     * @return  boolean
+     * @return boolean
      */
     public static boolean isSameDay(long time1, long time2) {
         Calendar calendar = Calendar.getInstance();
@@ -110,7 +143,7 @@ public class ZTimeUtils {
     /**
      * 得到现在分钟
      *
-     * @return  时间
+     * @return 时间
      */
 
     public static String getMinTime() {
@@ -120,9 +153,11 @@ public class ZTimeUtils {
         String min = dateString.substring(14, 16);
         return min;
     }
+
     /**
      * 得到现在小时
-     * @return  时间字符串.
+     *
+     * @return 时间字符串.
      */
     public static String getHourTime() {
         Date currentTime = new Date();
@@ -158,7 +193,7 @@ public class ZTimeUtils {
     /**
      * 获取当前月份
      *
-     * @return  时间字符串
+     * @return 时间字符串
      */
     public static String getMonthTime() {
         long currentTime = System.currentTimeMillis();
@@ -228,7 +263,7 @@ public class ZTimeUtils {
      * 年月日时分
      *
      * @param l 时间戳
-     * @return  时间字符串
+     * @return 时间字符串
      */
     public static String formatTIme(long l) {
         return yMdHm.format(l);
@@ -238,7 +273,7 @@ public class ZTimeUtils {
      * 年月日时分秒:yyyy-MM-dd HH:mm:ss
      *
      * @param l 时间戳
-     * @return  时间字符串
+     * @return 时间字符串
      */
     public static String formatTime(long l) {
         return yMdHmS.format(l);
@@ -415,8 +450,8 @@ public class ZTimeUtils {
     /**
      * 倒计时：分：秒
      *
-     * @param duration  时间戳
-     * @return  倒计时
+     * @param duration 时间戳
+     * @return 倒计时
      */
     public static String timeParse(long duration) {
         String time = "";
