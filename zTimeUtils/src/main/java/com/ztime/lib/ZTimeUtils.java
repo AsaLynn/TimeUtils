@@ -43,18 +43,19 @@ public class ZTimeUtils {
     public static final int FORMAT_TYPE_Hm = 2;
 
 
-    @IntDef({FORMAT_TYPE_yMdHmS, FORMAT_TYPE_yMdHm, FORMAT_TYPE_Hm})
+    @IntDef({FORMAT_TYPE_yMdHmS, FORMAT_TYPE_yMdHm, FORMAT_TYPE_Hm,FORMAT_TYPE_yMdHm_Point})
     @Retention(RetentionPolicy.SOURCE)
     public @interface FormatType {
     }
 
     /**
-     * 将时间戳转换为日期字符串.
+     * 将时间戳转换为日期字符串,方法有待完善.
      *
      * @param time       时间戳
-     * @param formatType 格式化类型: One of {@link #FORMAT_TYPE_yMdHmS}, {@link #FORMAT_TYPE_yMdHm}, or {@link #FORMAT_TYPE_yMdHm}.
+     * @param formatType 格式化类型: One of {@link #FORMAT_TYPE_yMdHmS}, {@link #FORMAT_TYPE_yMdHm},{@link #FORMAT_TYPE_yMdHm_Point}, or {@link #FORMAT_TYPE_yMdHm}.
      * @return 格式为yyyy-MM-dd HH:mm:ss的时间字符串.
      */
+    @Deprecated
     public static String stampToTime(long time, @FormatType int formatType) {
         String res;
         Date date = new Date(time);
@@ -65,7 +66,6 @@ public class ZTimeUtils {
         } else if (formatType == FORMAT_TYPE_Hm) {
             res = Hm.format(date);
         } else if (formatType == FORMAT_TYPE_yMdHm_Point) {
-            //res = Hm.format(date);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(yMdHm_SDF_POIONT);
             res = simpleDateFormat.format(date);
         } else {
@@ -90,6 +90,9 @@ public class ZTimeUtils {
             res = yMdHm.format(date);
         } else if (formatType == FORMAT_TYPE_Hm) {
             res = Hm.format(date);
+        } else if (formatType == FORMAT_TYPE_yMdHm_Point) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(yMdHm_SDF_POIONT);
+            res = simpleDateFormat.format(date);
         } else {
             res = yMdHmS.format(date);
         }
