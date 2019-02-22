@@ -16,15 +16,26 @@ import java.util.Locale;
  */
 public class ZTimeUtils {
 
+
+    /**
+     * 类型为24小时制日期格式:yyyy.MM.dd HH:mm.
+     */
+    private static String yMdHm_SDF_POIONT = "yyyy.MM.dd HH:mm";
+
     /**
      * 类型{@link #yMdHmS}:为24小时制日期格式:yyyy-MM-dd HH:mm:ss.
      */
-    public static final int FORMAT_TYPE_yMdHmS = 0;
+    public static final int FORMAT_TYPE_yMdHmS = 10;
 
     /**
      * 类型{@link #yMdHm}:为24小时制日期格式:yyyy-MM-dd HH:mm.
      */
-    public static final int FORMAT_TYPE_yMdHm = 1;
+    public static final int FORMAT_TYPE_yMdHm = 20;
+
+    /**
+     * 类型{@link #yMdHm}:为24小时制日期格式:yyyy.MM.dd HH:mm.
+     */
+    public static final int FORMAT_TYPE_yMdHm_Point = 21;
 
     /**
      * 类型{@link #Hm}:为24小时制日期格式:HH:mm.
@@ -32,9 +43,35 @@ public class ZTimeUtils {
     public static final int FORMAT_TYPE_Hm = 2;
 
 
-    @IntDef({FORMAT_TYPE_yMdHmS,FORMAT_TYPE_yMdHm,FORMAT_TYPE_Hm})
+    @IntDef({FORMAT_TYPE_yMdHmS, FORMAT_TYPE_yMdHm, FORMAT_TYPE_Hm})
     @Retention(RetentionPolicy.SOURCE)
     public @interface FormatType {
+    }
+
+    /**
+     * 将时间戳转换为日期字符串.
+     *
+     * @param time       时间戳
+     * @param formatType 格式化类型: One of {@link #FORMAT_TYPE_yMdHmS}, {@link #FORMAT_TYPE_yMdHm}, or {@link #FORMAT_TYPE_yMdHm}.
+     * @return 格式为yyyy-MM-dd HH:mm:ss的时间字符串.
+     */
+    public static String stampToTime(long time, @FormatType int formatType) {
+        String res;
+        Date date = new Date(time);
+        if (formatType == FORMAT_TYPE_yMdHmS) {
+            res = yMdHmS.format(date);
+        } else if (formatType == FORMAT_TYPE_yMdHm) {
+            res = yMdHm.format(date);
+        } else if (formatType == FORMAT_TYPE_Hm) {
+            res = Hm.format(date);
+        } else if (formatType == FORMAT_TYPE_yMdHm_Point) {
+            //res = Hm.format(date);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(yMdHm_SDF_POIONT);
+            res = simpleDateFormat.format(date);
+        } else {
+            res = yMdHmS.format(date);
+        }
+        return res;
     }
 
     /**
@@ -58,6 +95,7 @@ public class ZTimeUtils {
         }
         return res;
     }
+
 
     /**
      * 判断是否为同一天
@@ -159,7 +197,6 @@ public class ZTimeUtils {
         String str = Hm.format(curDate);
         return str;
     }
-
 
 
     /**
