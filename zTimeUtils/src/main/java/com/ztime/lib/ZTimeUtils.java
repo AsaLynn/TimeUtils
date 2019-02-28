@@ -44,7 +44,7 @@ public class ZTimeUtils {
     /**
      * 将时间字符串转换为时间戳.
      *
-     * @param time  时间字符串:2019-02-28.
+     * @param time 时间字符串:2019-02-28.
      * @return
      */
     public static long timeToStamp(String time) {
@@ -75,6 +75,52 @@ public class ZTimeUtils {
         return day1 == day2;
     }
 
+
+    /**
+     * 获取两个日期相差的天数.
+     *
+     * @param oldDate 最早日期.
+     * @param newDate 最晚日期.
+     * @return
+     */
+    public static int getSeparatedDays(Date oldDate, Date newDate) {
+        Calendar oldCalendar = Calendar.getInstance();
+        oldCalendar.setTime(oldDate);
+
+        Calendar newCalendar = Calendar.getInstance();
+        newCalendar.setTime(newDate);
+
+        int oldDay = oldCalendar.get(Calendar.DAY_OF_YEAR);
+        int newDay = newCalendar.get(Calendar.DAY_OF_YEAR);
+
+        int oldYear = oldCalendar.get(Calendar.YEAR);
+        int newYear = newCalendar.get(Calendar.YEAR);
+        if (oldYear != newYear) {//同一年
+            int timeDistance = 0;
+            for (int i = oldYear; i < newYear; i++) {
+                if (i % 4 == 0 && i % 100 != 0 || i % 400 == 0) {    //闰年
+                    timeDistance += 366;
+                } else {  //不是闰年
+                    timeDistance += 365;
+                }
+            }
+            return timeDistance + (newDay - oldDay);
+        } else { //不同年
+            System.out.println("判断day2 - oldDay : " + (newDay - oldDay));
+            return newDay - oldDay;
+        }
+    }
+
+    /**
+     * 比较两个时间戳相差的天数.
+     *
+     * @param oldStamp 毫秒时间戳之前的
+     * @param newStamp 毫秒时间戳之后的
+     * @return
+     */
+    public static int getSeparatedDays(long oldStamp, long newStamp) {
+        return getSeparatedDays(new Date(oldStamp), new Date(newStamp));
+    }
 
     /**
      * 年月日时分秒,格式为24小时制日期格式:yyyy-MM-dd HH:mm:ss
