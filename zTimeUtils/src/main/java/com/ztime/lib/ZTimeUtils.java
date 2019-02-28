@@ -1,6 +1,8 @@
 package com.ztime.lib;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.IntDef;
+import android.support.annotation.StringDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -11,94 +13,51 @@ import java.util.Formatter;
 import java.util.Locale;
 
 /**
- * 时间工具类
+ * 时间工具类--SDFPattern
  * Created by zxn on 2019/02/19.
  */
 public class ZTimeUtils {
 
+    @SuppressLint("SimpleDateFormat")
+    private static SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat();
 
-    /**
-     * 类型为24小时制日期格式:yyyy.MM.dd HH:mm.
-     */
-    private static String yMdHm_SDF_POIONT = "yyyy.MM.dd HH:mm";
-
-    /**
-     * 类型{@link #yMdHmS}:为24小时制日期格式:yyyy-MM-dd HH:mm:ss.
-     */
-    public static final int FORMAT_TYPE_yMdHmS = 10;
-
-    /**
-     * 类型{@link #yMdHm}:为24小时制日期格式:yyyy-MM-dd HH:mm.
-     */
-    public static final int FORMAT_TYPE_yMdHm = 20;
-
-    /**
-     * 类型{@link #yMdHm}:为24小时制日期格式:yyyy.MM.dd HH:mm.
-     */
-    public static final int FORMAT_TYPE_yMdHm_Point = 21;
-
-    /**
-     * 类型{@link #Hm}:为24小时制日期格式:HH:mm.
-     */
-    public static final int FORMAT_TYPE_Hm = 2;
-
-
-    @IntDef({FORMAT_TYPE_yMdHmS, FORMAT_TYPE_yMdHm, FORMAT_TYPE_Hm,FORMAT_TYPE_yMdHm_Point})
+    @StringDef({SDFPattern.yMdHm_SDF_POIONT, SDFPattern.yMdHmS_SDF, SDFPattern.yMdHm_SDF, SDFPattern.Hm_SDF,})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface FormatType {
+    public @interface PatternType {
     }
 
     /**
      * 将时间戳转换为日期字符串,方法有待完善.
      *
-     * @param time       时间戳
-     * @param formatType 格式化类型: One of {@link #FORMAT_TYPE_yMdHmS}, {@link #FORMAT_TYPE_yMdHm},{@link #FORMAT_TYPE_yMdHm_Point}, or {@link #FORMAT_TYPE_yMdHm}.
+     * @param time        时间戳
+     * @param patternType 格式化类型: One of {@link SDFPattern#yMdHm_SDF_POIONT },
+     *                    {@link SDFPattern#yMdHmS_SDF },{@link SDFPattern#yMdHm_SDF }, or {@link SDFPattern#Hm_SDF }.
      * @return 格式为yyyy-MM-dd HH:mm:ss的时间字符串.
      */
-    @Deprecated
-    public static String stampToTime(long time, @FormatType int formatType) {
-        String res;
+    public static String stampToTime(long time, @PatternType String patternType) {
         Date date = new Date(time);
-        if (formatType == FORMAT_TYPE_yMdHmS) {
-            res = yMdHmS.format(date);
-        } else if (formatType == FORMAT_TYPE_yMdHm) {
-            res = yMdHm.format(date);
-        } else if (formatType == FORMAT_TYPE_Hm) {
-            res = Hm.format(date);
-        } else if (formatType == FORMAT_TYPE_yMdHm_Point) {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(yMdHm_SDF_POIONT);
-            res = simpleDateFormat.format(date);
-        } else {
-            res = yMdHmS.format(date);
-        }
+        mSimpleDateFormat.applyPattern(patternType);
+        String res = mSimpleDateFormat.format(date);
         return res;
     }
 
     /**
-     * 将时间戳转换为日期字符串.
+     * 将时间字符串转换为时间戳.
      *
-     * @param time       时间戳
-     * @param formatType 格式化类型: One of {@link #FORMAT_TYPE_yMdHmS}, {@link #FORMAT_TYPE_yMdHm}, or {@link #FORMAT_TYPE_yMdHm}.
-     * @return 格式为yyyy-MM-dd HH:mm:ss的时间字符串.
+     * @param time  时间字符串:2019-02-28.
+     * @return
      */
-    public static String stampToDate(long time, @FormatType int formatType) {
-        String res;
-        Date date = new Date(time);
-        if (formatType == FORMAT_TYPE_yMdHmS) {
-            res = yMdHmS.format(date);
-        } else if (formatType == FORMAT_TYPE_yMdHm) {
-            res = yMdHm.format(date);
-        } else if (formatType == FORMAT_TYPE_Hm) {
-            res = Hm.format(date);
-        } else if (formatType == FORMAT_TYPE_yMdHm_Point) {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(yMdHm_SDF_POIONT);
-            res = simpleDateFormat.format(date);
-        } else {
-            res = yMdHmS.format(date);
+    public static long timeToStamp(String time) {
+        mSimpleDateFormat.applyPattern(SDFPattern.yMdHmS_SDF);
+        Date date = null;
+        try {
+            date = mSimpleDateFormat.parse(time);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0l;
         }
-        return res;
+        return date.getTime();
     }
-
 
     /**
      * 判断是否为同一天
@@ -120,39 +79,49 @@ public class ZTimeUtils {
     /**
      * 年月日时分秒,格式为24小时制日期格式:yyyy-MM-dd HH:mm:ss
      */
+    @Deprecated
     private static SimpleDateFormat yMdHmS = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     /**
      * 年月日时分,格式为24小时制日期格式:yyyy-MM-dd HH:mm
      */
+    @Deprecated
     private static SimpleDateFormat yMdHm = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     /**
      * 24小时制时分,格式为24小时制日期格式:HH:mm
      */
+    @Deprecated
     private static SimpleDateFormat Hm = new SimpleDateFormat("HH:mm");
 
 
     //年月日
+    @Deprecated
     private static SimpleDateFormat yMd = new SimpleDateFormat("yyyy-MM-dd");
 
     //24小时制月日时分
+    @Deprecated
     private static SimpleDateFormat MdHm = new SimpleDateFormat("MM-dd HH:mm");
 
 
     //12小时制时分
+    @Deprecated
     private static SimpleDateFormat hourminuteFormat = new SimpleDateFormat("hh:mm");
 
     //月日
+    @Deprecated
     private static SimpleDateFormat Md = new SimpleDateFormat("MM-dd");
 
     //24小时制时分秒
+    @Deprecated
     private static SimpleDateFormat hms = new SimpleDateFormat("HH:mm:ss");
 
     //分秒
+    @Deprecated
     private static SimpleDateFormat ms = new SimpleDateFormat("mm:ss");
 
     //秒
+    @Deprecated
     private static SimpleDateFormat s = new SimpleDateFormat("s");
 
 
@@ -320,17 +289,6 @@ public class ZTimeUtils {
         }
     }
 
-
-    /**
-     * 年月日时分秒:yyyy-MM-dd HH:mm:ss
-     *
-     * @param l 时间戳
-     * @return 时间字符串
-     */
-    public static String formatTime(long l) {
-        return yMdHmS.format(l);
-    }
-
     public static String getMinuteTime(long time) {
         if (time <= 0)
             return "00:00";
@@ -345,6 +303,7 @@ public class ZTimeUtils {
         return s.format(time);
     }
 
+    @Deprecated
     public static String getTimeForTask(long time) {
         try {
             return hms.format(time);
@@ -540,19 +499,13 @@ public class ZTimeUtils {
         }
     }
 
-    /**
-     * 将时间戳转换为时间
-     *
-     * @param time 时间戳
-     * @return 时间
-     */
-    public static String stampToDate(long time) {
-        String res;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date(time);
-        res = simpleDateFormat.format(date);
-        return res;
-    }
+    private static final int TIME_UNIT_SECOND = 1;
+    private static final int TIME_UNIT_MINUTIUE = TIME_UNIT_SECOND * 60;//分钟
+    private static final int TIME_UNIT_HOUR = TIME_UNIT_MINUTIUE * 60;//小时
+    private static final int TIME_UNIT_DAY = TIME_UNIT_HOUR * 24;//天
+    private static final int TIME_UNIT_YEAR = TIME_UNIT_DAY * 365;//年
+
+//------------------------------------------------------以下为过时的方法和常量,待抛弃--------------------------------------------------------------------//
 
     /**
      * 年月日时分
@@ -565,9 +518,89 @@ public class ZTimeUtils {
         return yMdHm.format(l);
     }
 
-    private static final int TIME_UNIT_SECOND = 1;
-    private static final int TIME_UNIT_MINUTIUE = TIME_UNIT_SECOND * 60;//分钟
-    private static final int TIME_UNIT_HOUR = TIME_UNIT_MINUTIUE * 60;//小时
-    private static final int TIME_UNIT_DAY = TIME_UNIT_HOUR * 24;//天
-    private static final int TIME_UNIT_YEAR = TIME_UNIT_DAY * 365;//年
+
+    /**
+     * 将时间戳转换为时间
+     *
+     * @param time 时间戳
+     * @return 时间
+     */
+    @Deprecated
+    public static String stampToDate(long time) {
+        String res;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(time);
+        res = simpleDateFormat.format(date);
+        return res;
+    }
+
+
+    /**
+     * 类型{@link #yMdHmS}:为24小时制日期格式:yyyy-MM-dd HH:mm:ss.
+     */
+    @Deprecated
+    public static final int FORMAT_TYPE_yMdHmS = 10;
+
+    /**
+     * 类型{@link #yMdHm}:为24小时制日期格式:yyyy-MM-dd HH:mm.
+     */
+    @Deprecated
+    public static final int FORMAT_TYPE_yMdHm = 20;
+
+    /**
+     * 类型{@link #yMdHm}:为24小时制日期格式:yyyy.MM.dd HH:mm.
+     */
+    @Deprecated
+    public static final int FORMAT_TYPE_yMdHm_Point = 21;
+
+    /**
+     * 类型{@link #Hm}:为24小时制日期格式:HH:mm.
+     */
+    @Deprecated
+    public static final int FORMAT_TYPE_Hm = 2;
+
+
+    @Deprecated
+    @IntDef({FORMAT_TYPE_yMdHmS, FORMAT_TYPE_yMdHm, FORMAT_TYPE_Hm, FORMAT_TYPE_yMdHm_Point})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface FormatType {
+    }
+
+    /**
+     * 将时间戳转换为日期字符串.
+     *
+     * @param time       时间戳
+     * @param formatType 格式化类型: One of {@link #FORMAT_TYPE_yMdHmS}, {@link #FORMAT_TYPE_yMdHm}, or {@link #FORMAT_TYPE_yMdHm}.
+     * @return 格式为yyyy-MM-dd HH:mm:ss的时间字符串.
+     */
+    @Deprecated
+    public static String stampToDate(long time, @FormatType int formatType) {
+        String res;
+        Date date = new Date(time);
+        if (formatType == FORMAT_TYPE_yMdHmS) {
+            mSimpleDateFormat.applyPattern(SDFPattern.yMdHmS_SDF);
+        } else if (formatType == FORMAT_TYPE_yMdHm) {
+            mSimpleDateFormat.applyPattern(SDFPattern.yMdHm_SDF);
+        } else if (formatType == FORMAT_TYPE_Hm) {
+            mSimpleDateFormat.applyPattern(SDFPattern.Hm_SDF);
+        } else if (formatType == FORMAT_TYPE_yMdHm_Point) {
+            mSimpleDateFormat.applyPattern(SDFPattern.yMdHm_SDF_POIONT);
+        } else {
+            mSimpleDateFormat.applyPattern(SDFPattern.yMdHmS_SDF);
+        }
+        res = mSimpleDateFormat.format(date);
+        return res;
+    }
+
+    /**
+     * 年月日时分秒:yyyy-MM-dd HH:mm:ss
+     *
+     * @param l 时间戳
+     * @return 时间字符串
+     */
+    @Deprecated
+    public static String formatTime(long l) {
+        return yMdHmS.format(l);
+    }
+
 }
