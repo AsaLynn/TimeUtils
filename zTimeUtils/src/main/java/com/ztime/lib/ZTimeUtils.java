@@ -21,7 +21,12 @@ public class ZTimeUtils {
     @SuppressLint("SimpleDateFormat")
     private static SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat();
 
-    @StringDef({SDFPattern.yMdHm_SDF_POIONT, SDFPattern.yMdHmS_SDF, SDFPattern.yMdHm_SDF, SDFPattern.Hm_SDF,})
+    @StringDef({SDFPattern.yMdHm_SDF_POIONT,
+            SDFPattern.yMdHmS_SDF,
+            SDFPattern.yMdHm_SDF,
+            SDFPattern.Hm_SDF,
+            SDFPattern.yMdH_SDF,
+            SDFPattern.yMd_SDF,})
     @Retention(RetentionPolicy.SOURCE)
     public @interface PatternType {
     }
