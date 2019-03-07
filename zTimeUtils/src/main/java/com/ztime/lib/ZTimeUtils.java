@@ -26,9 +26,48 @@ public class ZTimeUtils {
             SDFPattern.yMdHm_SDF,
             SDFPattern.Hm_SDF,
             SDFPattern.yMdH_SDF,
-            SDFPattern.yMd_SDF,})
+            SDFPattern.yMd_SDF,
+            SDFPattern.yM_SDF,
+            SDFPattern.HmS_SDF,
+            SDFPattern.Md_SDF,
+            SDFPattern.yMdHmS_SDF_NYR,
+            SDFPattern.Md_SDF_YR,
+            SDFPattern.MdHmS_SDF_YR,
+    })
     @Retention(RetentionPolicy.SOURCE)
     public @interface PatternType {
+    }
+
+    /**
+     * 判断是否为同一月
+     *
+     * @param stamp1 时间戳1
+     * @param stamp2 时间戳2
+     * @return boolean
+     */
+    public static boolean isSameMonth(long stamp1, long stamp2) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(stamp1));
+        int month1 = calendar.get(Calendar.MONTH);
+        calendar.setTime(new Date(stamp2));
+        int month2 = calendar.get(Calendar.MONTH);
+        return month1 == month2;
+    }
+
+    /**
+     * 判断是否为同一年
+     *
+     * @param stamp1 时间戳1
+     * @param stamp2 时间戳2
+     * @return boolean
+     */
+    public static boolean isSameYear(long stamp1, long stamp2) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(stamp1));
+        int year1 = calendar.get(Calendar.YEAR);
+        calendar.setTime(new Date(stamp2));
+        int year2 = calendar.get(Calendar.YEAR);
+        return year1 == year2;
     }
 
     /**
