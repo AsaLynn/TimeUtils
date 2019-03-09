@@ -19,7 +19,7 @@ import java.util.Locale;
 public class ZTimeUtils {
 
     @SuppressLint("SimpleDateFormat")
-    private static SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat();
+    private static final SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat();
 
     @StringDef({SDFPattern.yMdHm_SDF_POIONT,
             SDFPattern.yMdHmS_SDF,
@@ -31,7 +31,7 @@ public class ZTimeUtils {
             SDFPattern.HmS_SDF,
             SDFPattern.Md_SDF,
             SDFPattern.yMdHmS_SDF_NYR,
-            SDFPattern.Md_SDF_YR,
+//            SDFPattern.Md_SDF_YR,
             SDFPattern.MdHmS_SDF_YR,
             SDFPattern.yMd_SDF_NYR,
             SDFPattern.yMd1_SDF_NYR,
@@ -42,6 +42,25 @@ public class ZTimeUtils {
             SDFPattern.M1d1_SDF_YR,
             SDFPattern.yM1d1HHmm_SDF_NYR,
             SDFPattern.M1d1HHmm_SDF_YR,
+            SDFPattern.yyyyMMddHHmmSS_SDF_RRCC,
+            SDFPattern.yyyyMMddHHmm_SDF_RRC,
+            SDFPattern.yyyyMMddHH_SDF_RR,
+            SDFPattern.yyyyMMdd_SDF_RR,
+            SDFPattern.yyyyMM_SDF_R,
+            SDFPattern.MMdd_SDF_R,
+            SDFPattern.HHmmSS_SDF_CC,
+            SDFPattern.yyyyMMddHHmm_SDF_PPC,
+            SDFPattern.HHmm_SDF_C,
+            SDFPattern.yyyyMMddHHmmSS_SDF_YMDCC,
+            SDFPattern.yyyyMdHHmmSS_SDF_YMDCC,
+            SDFPattern.yyyyMdHHmm_SDF_YMDC,
+            SDFPattern.yyyyMMdd_SDF_YMD,
+            SDFPattern.yyyyMd_SDF_YMD,
+            SDFPattern.MMdd_SDF_MD,
+            SDFPattern.Md_SDF_MD,
+            SDFPattern.MMddHHmmSS_SDF_MDCC,
+            SDFPattern.MdHHmmSS_SDF_MDCC,
+            SDFPattern.MdHHmm_SDF_MDC,
 
             //SDFPattern.M1d1_SDF_YR,
     })
