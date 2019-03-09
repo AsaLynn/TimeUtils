@@ -33,9 +33,57 @@ public class ZTimeUtils {
             SDFPattern.yMdHmS_SDF_NYR,
             SDFPattern.Md_SDF_YR,
             SDFPattern.MdHmS_SDF_YR,
+            SDFPattern.yMd_SDF_NYR,
+            SDFPattern.yMd1_SDF_NYR,
+            SDFPattern.yMd1HmS_SDF_NYR,
+            SDFPattern.yM1d1HmS_SDF_NYR,
+            SDFPattern.yM1d1_SDF_NYR,
+            SDFPattern.M1d1HmS_SDF_YR,
+            SDFPattern.M1d1_SDF_YR,
+            SDFPattern.yM1d1HHmm_SDF_NYR,
+            SDFPattern.M1d1HHmm_SDF_YR,
+
+            //SDFPattern.M1d1_SDF_YR,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface PatternType {
+    }
+
+    /**
+     * 判断时间戳是否为0秒
+     *
+     * @param stamp 时间戳
+     * @return 真
+     */
+    public static boolean isZeroSecond(long stamp) {
+        Date date = new Date(stamp);
+        return date.getSeconds() == 0;
+    }
+
+    /**
+     * 判断时间戳是否为0分
+     *
+     * @param stamp 时间戳
+     * @return 真
+     */
+    public static boolean isZeroMinute(long stamp) {
+        Date date = new Date(stamp);
+        int minutes = date.getMinutes();
+        return minutes == 0;
+    }
+
+    /**
+     * 判断时间戳是否为0点0分0秒
+     *
+     * @param stamp 时间戳
+     * @return 真
+     */
+    public static boolean isZeroTime(long stamp) {
+        Date date = new Date(stamp);
+        int hours = date.getHours();
+        int minutes = date.getMinutes();
+        int seconds = date.getSeconds();
+        return hours == 0 && minutes == 0 && seconds == 0;
     }
 
     /**
