@@ -156,7 +156,7 @@ public class ZTimeUtils {
      * 将时间字符串转换为时间戳.
      *
      * @param time 时间字符串:2019-02-28.
-     * @return
+     * @return  时间戳
      */
     public static long timeToStamp(String time) {
         mSimpleDateFormat.applyPattern(SDFPattern.yMdHmS_SDF);
@@ -192,7 +192,7 @@ public class ZTimeUtils {
      *
      * @param oldDate 最早日期.
      * @param newDate 最晚日期.
-     * @return
+     * @return 两个日期相差的天数
      */
     public static int getSeparatedDays(Date oldDate, Date newDate) {
         Calendar oldCalendar = Calendar.getInstance();
@@ -227,7 +227,7 @@ public class ZTimeUtils {
      *
      * @param oldStamp 毫秒时间戳之前的
      * @param newStamp 毫秒时间戳之后的
-     * @return
+     * @return 相差的天数
      */
     public static int getSeparatedDays(long oldStamp, long newStamp) {
         return getSeparatedDays(new Date(oldStamp), new Date(newStamp));
