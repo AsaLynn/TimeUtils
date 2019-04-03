@@ -61,11 +61,26 @@ public class ZTimeUtils {
             SDFPattern.MMddHHmmSS_SDF_MDCC,
             SDFPattern.MdHHmmSS_SDF_MDCC,
             SDFPattern.MdHHmm_SDF_MDC,
+            SDFPattern.yyyyMMddHHmmss_SDF,
+            SDFPattern.MMRdd_SDF,
 
             //SDFPattern.M1d1_SDF_YR,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface PatternType {
+    }
+
+    /**
+     * 时间格式转化,老格式转新格式.
+     *
+     * @param time       老格式的时间
+     * @param oldPattern 老格式
+     * @param newPattern 新格式
+     * @return 新格式的时间
+     */
+    public static String timeToTime(String time, @PatternType String oldPattern, @PatternType String newPattern) {
+        long stamp = timeToStamp(time, oldPattern);
+        return stampToTime(stamp, newPattern);
     }
 
     /**
@@ -155,9 +170,30 @@ public class ZTimeUtils {
     /**
      * 将时间字符串转换为时间戳.
      *
-     * @param time 时间字符串:2019-02-28.
-     * @return  时间戳
+     * @param time        时间字符串
+     * @param patternType 格式化类型: One of {@link SDFPattern#yMdHm_SDF_POIONT },
+     * @return
+     * @link SDFPattern#yMdHmS_SDF },{@link SDFPattern#yMdHm_SDF }, or {@link SDFPattern#Hm_SDF }.
      */
+    public static long timeToStamp(String time, @PatternType String patternType) {
+        mSimpleDateFormat.applyPattern(patternType);
+        Date date = null;
+        try {
+            date = mSimpleDateFormat.parse(time);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0l;
+        }
+        return date.getTime();
+    }
+
+    /**
+     * 将时间字符串转换为时间戳.
+     *
+     * @param time 时间字符串:2019-02-28.
+     * @return 时间戳
+     */
+    @Deprecated
     public static long timeToStamp(String time) {
         mSimpleDateFormat.applyPattern(SDFPattern.yMdHmS_SDF);
         Date date = null;

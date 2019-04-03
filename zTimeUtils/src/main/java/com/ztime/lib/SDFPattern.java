@@ -9,6 +9,12 @@ public final class SDFPattern {
     //SDF_(R(rod)-->-),(C(colon)-->:),(Y(year)-->年),(M(month)-->月),(D(day)-->日),(P(point)-->.)
 
     /**
+     * 20190403105532
+     * 类型为24小时制日期格式:yyyyMMddHHmmss.
+     */
+    public static final String yyyyMMddHHmmss_SDF = "yyyyMMddHHmmss";
+
+    /**
      * 类型为24小时制日期格式:yyyy-MM-dd HH:mm:ss.
      */
     public static final String yyyyMMddHHmmSS_SDF_RRCC = "yyyy-MM-dd HH:mm:ss";
@@ -33,12 +39,12 @@ public final class SDFPattern {
      */
     public static final String yyyyMM_SDF_R = "yyyy-MM";
 
+
+
     /**
      * 类型为24小时制日期格式:MM-dd.
      */
-
-    public static final String MMdd_SDF_R = "MM-dd";
-
+    public static final String MMRdd_SDF = "MM-dd";
 
 
     /**
@@ -47,12 +53,10 @@ public final class SDFPattern {
     public static final String HHmmSS_SDF_CC = "HH:mm:ss";
 
 
-
     /**
      * 类型为24小时制日期格式:yyyy.MM.dd HH:mm.
      */
     public static final String yyyyMMddHHmm_SDF_PPC = "yyyy.MM.dd HH:mm";
-
 
 
     /**
@@ -67,12 +71,10 @@ public final class SDFPattern {
     public static final String yyyyMMddHHmmSS_SDF_YMDCC = "yyyy年MM月dd日 HH:mm:ss";
 
 
-
     /**
      * 类型为24小时制日期格式:yyyy年M月d日 HH:mm:ss
      */
     public static final String yyyyMdHHmmSS_SDF_YMDCC = "yyyy年M月d日 HH:mm:ss";
-
 
 
     /**
@@ -81,19 +83,16 @@ public final class SDFPattern {
     public static final String yyyyMdHHmm_SDF_YMDC = "yyyy年M月d日 HH:mm";
 
 
-
     /**
      * 类型为24小时制日期格式:yyyy年MM月dd日
      */
     public static final String yyyyMMdd_SDF_YMD = "yyyy年MM月dd日";
 
 
-
     /**
      * 类型为24小时制日期格式:yyyy年M月d日
      */
     public static final String yyyyMd_SDF_YMD = "yyyy年M月d日";
-
 
 
     /**
@@ -119,21 +118,16 @@ public final class SDFPattern {
     public static final String MMddHHmmSS_SDF_MDCC = "MM月dd日 HH:mm:ss";
 
 
-
     /**
      * 类型为24小时制日期格式:M月d日 HH:mm:ss
      */
     public static final String MdHHmmSS_SDF_MDCC = "M月d日 HH:mm:ss";
 
 
-
     /**
      * 类型为24小时制日期格式:M月d日 HH:mm
      */
     public static final String MdHHmm_SDF_MDC = "M月d日 HH:mm";
-
-
-
 
 
     //------------------------------以下常量过时废弃------------------------------------------------
@@ -256,6 +250,13 @@ public final class SDFPattern {
      */
     @Deprecated
     public static final String HmS_SDF = "HH:mm:ss";
+
+    /**
+     * 类型为24小时制日期格式:MM-dd.
+     * {@link SDFPattern#MMRdd_SDF }
+     */
+    @Deprecated
+    public static final String MMdd_SDF_R = "MM-dd";
 
 
 }
