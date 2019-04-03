@@ -171,9 +171,9 @@ public class ZTimeUtils {
      * 将时间字符串转换为时间戳.
      *
      * @param time        时间字符串
-     * @param patternType 格式化类型: One of {@link SDFPattern#yMdHm_SDF_POIONT },
-     * @return
-     * @link SDFPattern#yMdHmS_SDF },{@link SDFPattern#yMdHm_SDF }, or {@link SDFPattern#Hm_SDF }.
+     * @param patternType 格式化类型: One of {@link SDFPattern#yMdHm_SDF_POIONT },@link SDFPattern#yMdHmS_SDF },{@link SDFPattern#yMdHm_SDF }, or {@link SDFPattern#Hm_SDF }.
+     * @return  时间戳
+     *
      */
     public static long timeToStamp(String time, @PatternType String patternType) {
         mSimpleDateFormat.applyPattern(patternType);
