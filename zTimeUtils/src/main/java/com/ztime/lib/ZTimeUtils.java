@@ -63,6 +63,7 @@ public class ZTimeUtils {
             SDFPattern.MdHHmm_SDF_MDC,
             SDFPattern.yyyyMMddHHmmss_SDF,
             SDFPattern.MMRdd_SDF,
+            SDFPattern.yyyySPMMSPdd_SDF,
 
             //SDFPattern.M1d1_SDF_YR,
     })
@@ -172,8 +173,7 @@ public class ZTimeUtils {
      *
      * @param time        时间字符串
      * @param patternType 格式化类型: One of {@link SDFPattern#yMdHm_SDF_POIONT },@link SDFPattern#yMdHmS_SDF },{@link SDFPattern#yMdHm_SDF }, or {@link SDFPattern#Hm_SDF }.
-     * @return  时间戳
-     *
+     * @return 时间戳
      */
     public static long timeToStamp(String time, @PatternType String patternType) {
         mSimpleDateFormat.applyPattern(patternType);
