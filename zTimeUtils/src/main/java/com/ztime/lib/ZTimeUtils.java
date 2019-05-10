@@ -47,6 +47,7 @@ public class ZTimeUtils {
             SDFPattern.yyyyMMddHH_SDF_RR,
             SDFPattern.yyyyMMdd_SDF_RR,
             SDFPattern.yyyyMM_SDF_R,
+            SDFPattern.MMRddHHCmm_SDF,
             SDFPattern.MMdd_SDF_R,
             SDFPattern.HHmmSS_SDF_CC,
             SDFPattern.yyyyMMddHHmm_SDF_PPC,

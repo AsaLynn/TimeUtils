@@ -6,7 +6,7 @@ package com.ztime.lib;
  */
 public final class SDFPattern {
 
-    //SDF_(SP(sprit)-->/),(R(rod)-->-),(C(colon)-->:),(Y(year)-->年),(M(month)-->月),(D(day)-->日),(P(point)-->.)
+    //SDF_(SP(sprit)-->"/"),(R(rod)-->"-"),(C(colon)-->":"),(Y(year)-->"年"),(M(month)-->"月"),(D(day)-->"日"),(P(point)-->".")
 
     /**
      * 2019/04/03
@@ -46,6 +46,10 @@ public final class SDFPattern {
     public static final String yyyyMM_SDF_R = "yyyy-MM";
 
 
+    /**
+     * 类型为24小时制日期格式:MM-dd HH:mm.
+     */
+    public static final String MMRddHHCmm_SDF = "MM-dd HH:mm";
 
     /**
      * 类型为24小时制日期格式:MM-dd.
