@@ -23,7 +23,7 @@ public final class SDFPattern {
     /**
      * 类型为24小时制日期格式:yyyy-MM-dd HH:mm:ss.
      */
-    public static final String yyyyMMddHHmmSS_SDF_RRCC = "yyyy-MM-dd HH:mm:ss";
+    public static final String yyyyRMMRddHHCmmCSS_SDF = "yyyy-MM-dd HH:mm:ss";
 
     /**
      * 类型为24小时制日期格式:yyyy-MM-dd HH:mm.
@@ -267,6 +267,12 @@ public final class SDFPattern {
      */
     @Deprecated
     public static final String MMdd_SDF_R = "MM-dd";
+
+    /**
+     * 类型为24小时制日期格式:yyyy-MM-dd HH:mm:ss.
+     */
+    @Deprecated
+    public static final String yyyyMMddHHmmSS_SDF_RRCC = "yyyy-MM-dd HH:mm:ss";
 
 
 }

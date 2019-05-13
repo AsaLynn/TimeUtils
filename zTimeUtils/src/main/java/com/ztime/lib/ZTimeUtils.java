@@ -31,7 +31,6 @@ public class ZTimeUtils {
             SDFPattern.HmS_SDF,
             SDFPattern.Md_SDF,
             SDFPattern.yMdHmS_SDF_NYR,
-//            SDFPattern.Md_SDF_YR,
             SDFPattern.MdHmS_SDF_YR,
             SDFPattern.yMd_SDF_NYR,
             SDFPattern.yMd1_SDF_NYR,
@@ -65,11 +64,23 @@ public class ZTimeUtils {
             SDFPattern.yyyyMMddHHmmss_SDF,
             SDFPattern.MMRdd_SDF,
             SDFPattern.yyyySPMMSPdd_SDF,
+            SDFPattern.yyyyRMMRddHHCmmCSS_SDF,
 
             //SDFPattern.M1d1_SDF_YR,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface PatternType {
+    }
+
+    /**
+     * 获取当前时间.
+     *
+     * @param pattern 格式
+     * @return 当前时间
+     */
+    public static String currentTime(@PatternType String pattern) {
+        mSimpleDateFormat.applyPattern(pattern);
+        return mSimpleDateFormat.format(new Date(System.currentTimeMillis()));
     }
 
     /**
@@ -319,112 +330,112 @@ public class ZTimeUtils {
     private static SimpleDateFormat s = new SimpleDateFormat("s");
 
 
-    /**
-     * 获取当前年月日格式的时间,例如:yyyy-MM-dd
-     *
-     * @return 日期时间
-     */
-    public static String getCurrentYearMonthDayTime() {
-        Date curDate = new Date(System.currentTimeMillis());
-        return yMd.format(curDate);
-    }
+//    /**
+//     * 获取当前年月日格式的时间,例如:yyyy-MM-dd
+//     *
+//     * @return 日期时间
+//     */
+//    public static String getCurrentYearMonthDayTime() {
+//        Date curDate = new Date(System.currentTimeMillis());
+//        return yMd.format(curDate);
+//    }
+//
+//    /**
+//     * 获取当前时间是上午还是下午:afternoon,midday,morning
+//     *
+//     * @return AM, PM
+//     */
+//    public static String getCurrentTimeType() {
+//        long time = System.currentTimeMillis();
+//        final Calendar mCalendar = Calendar.getInstance();
+//        mCalendar.setTimeInMillis(time);
+//        int apm = mCalendar.get(Calendar.AM_PM);
+//        if (apm == 0) {
+//            return "AM";
+//        } else {
+//            return "PM";
+//        }
+//    }
 
-    /**
-     * 获取当前时间是上午还是下午:afternoon,midday,morning
-     *
-     * @return AM, PM
-     */
-    public static String getCurrentTimeType() {
-        long time = System.currentTimeMillis();
-        final Calendar mCalendar = Calendar.getInstance();
-        mCalendar.setTimeInMillis(time);
-        int apm = mCalendar.get(Calendar.AM_PM);
-        if (apm == 0) {
-            return "AM";
-        } else {
-            return "PM";
-        }
-    }
+//    /**
+//     * 获取当前时分格式的时间,例如:11:25
+//     *
+//     * @return 日期时间
+//     */
+//    public static String getHourMinTime() {
+//        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+//        String str = Hm.format(curDate);
+//        return str;
+//    }
 
-    /**
-     * 获取当前时分格式的时间,例如:11:25
-     *
-     * @return 日期时间
-     */
-    public static String getHourMinTime() {
-        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-        String str = Hm.format(curDate);
-        return str;
-    }
-
-    @Deprecated
-    public static String getHourMinutesTime() {
-        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-        String str = Hm.format(curDate);
-        return str;
-    }
-
-
-    /**
-     * 得到现在分钟
-     *
-     * @return 时间
-     */
-
-    public static String getMinTime() {
-        Date currentTime = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateString = formatter.format(currentTime);
-        String min = dateString.substring(14, 16);
-        return min;
-    }
-
-    /**
-     * 得到现在小时
-     *
-     * @return 时间字符串.
-     */
-    public static String getHourTime() {
-        Date currentTime = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateString = formatter.format(currentTime);
-        String hour = dateString.substring(11, 13);
-        return hour;
-    }
+//    @Deprecated
+//    public static String getHourMinutesTime() {
+//        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+//        String str = Hm.format(curDate);
+//        return str;
+//    }
 
 
-    /**
-     * 获取当前日期中的天数.例如今天是2019.02.19,返回19
-     *
-     * @return 前日期中的天
-     */
-    public static String getDayTime() {
-        long currentTime = System.currentTimeMillis();
-        String currentFormat = Md.format(currentTime);
-        return currentFormat.substring(3);
-    }
+//    /**
+//     * 得到现在分钟
+//     *
+//     * @return 时间
+//     */
+//
+//    public static String getMinTime() {
+//        Date currentTime = new Date();
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String dateString = formatter.format(currentTime);
+//        String min = dateString.substring(14, 16);
+//        return min;
+//    }
 
-    /**
-     * 获取当前日期中的天数.例如今天是2019.02.19,返回19
-     *
-     * @return 前日期中的天
-     */
-    public static String getDay() {
-        long currentTime = System.currentTimeMillis();
-        String currentFormat = Md.format(currentTime);
-        return currentFormat.substring(3);
-    }
+//    /**
+//     * 得到现在小时
+//     *
+//     * @return 时间字符串.
+//     */
+//    public static String getHourTime() {
+//        Date currentTime = new Date();
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String dateString = formatter.format(currentTime);
+//        String hour = dateString.substring(11, 13);
+//        return hour;
+//    }
 
-    /**
-     * 获取当前月份
-     *
-     * @return 时间字符串
-     */
-    public static String getMonthTime() {
-        long currentTime = System.currentTimeMillis();
-        String currentFormat = Md.format(currentTime);
-        return currentFormat.substring(0, 2);
-    }
+
+//    /**
+//     * 获取当前日期中的天数.例如今天是2019.02.19,返回19
+//     *
+//     * @return 前日期中的天
+//     */
+//    public static String getDayTime() {
+//        long currentTime = System.currentTimeMillis();
+//        String currentFormat = Md.format(currentTime);
+//        return currentFormat.substring(3);
+//    }
+
+//    /**
+//     * 获取当前日期中的天数.例如今天是2019.02.19,返回19
+//     *
+//     * @return 前日期中的天
+//     */
+//    public static String getDay() {
+//        long currentTime = System.currentTimeMillis();
+//        String currentFormat = Md.format(currentTime);
+//        return currentFormat.substring(3);
+//    }
+
+//    /**
+//     * 获取当前月份
+//     *
+//     * @return 时间字符串
+//     */
+//    public static String getMonthTime() {
+//        long currentTime = System.currentTimeMillis();
+//        String currentFormat = Md.format(currentTime);
+//        return currentFormat.substring(0, 2);
+//    }
 
     public static String showTime(long elapsed) {
         String time = "1分钟前";
