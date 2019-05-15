@@ -21,32 +21,19 @@ public class ZTimeUtils {
     @SuppressLint("SimpleDateFormat")
     private static final SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat();
 
-    @StringDef({
-            SDFPattern.yyyyMMddHHmm_SDF_RRC,
-            SDFPattern.yyyyMMddHH_SDF_RR,
-            SDFPattern.yyyyMM_SDF_R,
-            SDFPattern.MMRddHHCmm_SDF,
-            SDFPattern.HHmmSS_SDF_CC,
-            SDFPattern.yyyyMMddHHmm_SDF_PPC,
-            SDFPattern.HHmm_SDF_C,
-            SDFPattern.yyyyMMddHHmmSS_SDF_YMDCC,
-            SDFPattern.yyyyMdHHmmSS_SDF_YMDCC,
-            SDFPattern.yyyyMdHHmm_SDF_YMDC,
-            SDFPattern.yyyyMMdd_SDF_YMD,
-            SDFPattern.yyyyMd_SDF_YMD,
-            SDFPattern.MMdd_SDF_MD,
-            SDFPattern.Md_SDF_MD,
-            SDFPattern.MMddHHmmSS_SDF_MDCC,
-            SDFPattern.MdHHmmSS_SDF_MDCC,
-            SDFPattern.MdHHmm_SDF_MDC,
-            SDFPattern.yyyyMMddHHmmss_SDF,
-            SDFPattern.MMRdd_SDF,
-            SDFPattern.yyyySPMMSPdd_SDF,
-            SDFPattern.yyyyRMMRdd_SDF,
-            SDFPattern.yyyyRMMRddHHCmmCSS_SDF,})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface PatternType {
+    /***
+     * 根据当前时间推算dayCount天前或dayCount天后的时间.
+     * @param dayCount  相差的天数.
+     * @return 推算dayCount天前或dayCount天后的时间.
+     */
+    public static String calculateTime(int dayCount, @PatternType String pattern) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + dayCount);
+        mSimpleDateFormat.applyPattern(pattern);
+        return mSimpleDateFormat.format(calendar.getTime());
     }
+
 
     /**
      * 获取当前时间.
@@ -146,7 +133,6 @@ public class ZTimeUtils {
      *
      * @param time        时间戳
      * @param patternType 格式化类型:
-     *
      * @return 格式为yyyy-MM-dd HH:mm:ss的时间字符串.
      */
     public static String stampToTime(long time, @PatternType String patternType) {
