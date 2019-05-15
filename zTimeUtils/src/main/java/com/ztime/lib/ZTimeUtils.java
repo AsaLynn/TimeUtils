@@ -21,33 +21,11 @@ public class ZTimeUtils {
     @SuppressLint("SimpleDateFormat")
     private static final SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat();
 
-    @StringDef({SDFPattern.yMdHm_SDF_POIONT,
-            SDFPattern.yMdHmS_SDF,
-            SDFPattern.yMdHm_SDF,
-            SDFPattern.Hm_SDF,
-            SDFPattern.yMdH_SDF,
-            SDFPattern.yMd_SDF,
-            SDFPattern.yM_SDF,
-            SDFPattern.HmS_SDF,
-            SDFPattern.Md_SDF,
-            SDFPattern.yMdHmS_SDF_NYR,
-            SDFPattern.MdHmS_SDF_YR,
-            SDFPattern.yMd_SDF_NYR,
-            SDFPattern.yMd1_SDF_NYR,
-            SDFPattern.yMd1HmS_SDF_NYR,
-            SDFPattern.yM1d1HmS_SDF_NYR,
-            SDFPattern.yM1d1_SDF_NYR,
-            SDFPattern.M1d1HmS_SDF_YR,
-            SDFPattern.M1d1_SDF_YR,
-            SDFPattern.yM1d1HHmm_SDF_NYR,
-            SDFPattern.M1d1HHmm_SDF_YR,
-            SDFPattern.yyyyMMddHHmmSS_SDF_RRCC,
+    @StringDef({
             SDFPattern.yyyyMMddHHmm_SDF_RRC,
             SDFPattern.yyyyMMddHH_SDF_RR,
-            SDFPattern.yyyyMMdd_SDF_RR,
             SDFPattern.yyyyMM_SDF_R,
             SDFPattern.MMRddHHCmm_SDF,
-            SDFPattern.MMdd_SDF_R,
             SDFPattern.HHmmSS_SDF_CC,
             SDFPattern.yyyyMMddHHmm_SDF_PPC,
             SDFPattern.HHmm_SDF_C,
@@ -64,10 +42,8 @@ public class ZTimeUtils {
             SDFPattern.yyyyMMddHHmmss_SDF,
             SDFPattern.MMRdd_SDF,
             SDFPattern.yyyySPMMSPdd_SDF,
-            SDFPattern.yyyyRMMRddHHCmmCSS_SDF,
-
-            //SDFPattern.M1d1_SDF_YR,
-    })
+            SDFPattern.yyyyRMMRdd_SDF,
+            SDFPattern.yyyyRMMRddHHCmmCSS_SDF,})
     @Retention(RetentionPolicy.SOURCE)
     public @interface PatternType {
     }
@@ -169,8 +145,8 @@ public class ZTimeUtils {
      * 将时间戳转换为日期字符串,方法有待完善.
      *
      * @param time        时间戳
-     * @param patternType 格式化类型: One of {@link SDFPattern#yMdHm_SDF_POIONT },
-     *                    {@link SDFPattern#yMdHmS_SDF },{@link SDFPattern#yMdHm_SDF }, or {@link SDFPattern#Hm_SDF }.
+     * @param patternType 格式化类型:
+     *
      * @return 格式为yyyy-MM-dd HH:mm:ss的时间字符串.
      */
     public static String stampToTime(long time, @PatternType String patternType) {
@@ -184,30 +160,11 @@ public class ZTimeUtils {
      * 将时间字符串转换为时间戳.
      *
      * @param time        时间字符串
-     * @param patternType 格式化类型: One of {@link SDFPattern#yMdHm_SDF_POIONT },@link SDFPattern#yMdHmS_SDF },{@link SDFPattern#yMdHm_SDF }, or {@link SDFPattern#Hm_SDF }.
+     * @param patternType 格式化类型:
      * @return 时间戳
      */
     public static long timeToStamp(String time, @PatternType String patternType) {
         mSimpleDateFormat.applyPattern(patternType);
-        Date date = null;
-        try {
-            date = mSimpleDateFormat.parse(time);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0l;
-        }
-        return date.getTime();
-    }
-
-    /**
-     * 将时间字符串转换为时间戳.
-     *
-     * @param time 时间字符串:2019-02-28.
-     * @return 时间戳
-     */
-    @Deprecated
-    public static long timeToStamp(String time) {
-        mSimpleDateFormat.applyPattern(SDFPattern.yMdHmS_SDF);
         Date date = null;
         try {
             date = mSimpleDateFormat.parse(time);
@@ -771,31 +728,6 @@ public class ZTimeUtils {
     public @interface FormatType {
     }
 
-    /**
-     * 将时间戳转换为日期字符串.
-     *
-     * @param time       时间戳
-     * @param formatType 格式化类型: One of {@link #FORMAT_TYPE_yMdHmS}, {@link #FORMAT_TYPE_yMdHm}, or {@link #FORMAT_TYPE_yMdHm}.
-     * @return 格式为yyyy-MM-dd HH:mm:ss的时间字符串.
-     */
-    @Deprecated
-    public static String stampToDate(long time, @FormatType int formatType) {
-        String res;
-        Date date = new Date(time);
-        if (formatType == FORMAT_TYPE_yMdHmS) {
-            mSimpleDateFormat.applyPattern(SDFPattern.yMdHmS_SDF);
-        } else if (formatType == FORMAT_TYPE_yMdHm) {
-            mSimpleDateFormat.applyPattern(SDFPattern.yMdHm_SDF);
-        } else if (formatType == FORMAT_TYPE_Hm) {
-            mSimpleDateFormat.applyPattern(SDFPattern.Hm_SDF);
-        } else if (formatType == FORMAT_TYPE_yMdHm_Point) {
-            mSimpleDateFormat.applyPattern(SDFPattern.yMdHm_SDF_POIONT);
-        } else {
-            mSimpleDateFormat.applyPattern(SDFPattern.yMdHmS_SDF);
-        }
-        res = mSimpleDateFormat.format(date);
-        return res;
-    }
 
     /**
      * 年月日时分秒:yyyy-MM-dd HH:mm:ss
