@@ -2,7 +2,6 @@ package com.ztime.lib;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.IntDef;
-import android.support.annotation.StringDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -25,6 +24,7 @@ public class ZTimeUtils {
      * 根据当前时间推算dayCount天前或dayCount天后的时间.
      * @param dayCount  相差的天数.
      * @return 推算dayCount天前或dayCount天后的时间.
+     * @param pattern 格式
      */
     public static String calculateTime(int dayCount, @PatternType String pattern) {
         Calendar calendar = Calendar.getInstance();
