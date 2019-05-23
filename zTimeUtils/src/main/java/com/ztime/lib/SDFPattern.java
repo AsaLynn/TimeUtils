@@ -27,6 +27,12 @@ public interface SDFPattern {
     String yyyyMMdd_SDF = "yyyyMMdd";
 
     /**
+     * 194800
+     * 类型为24小时制日期格式:HHmmss.
+     */
+    String HHmmss_SDF = "HHmmss";
+
+    /**
      * 类型为24小时制日期格式:yyyy-MM-dd HH:mm:ss.
      */
     String yyyyRMMRddHHCmmCSS_SDF = "yyyy-MM-dd HH:mm:ss";
