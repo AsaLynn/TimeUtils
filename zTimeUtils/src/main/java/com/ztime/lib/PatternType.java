@@ -28,6 +28,7 @@ import java.lang.annotation.RetentionPolicy;
         SDFPattern.MdHHmmSS_SDF_MDCC,
         SDFPattern.MdHHmm_SDF_MDC,
         SDFPattern.yyyyMMddHHmmss_SDF,
+        SDFPattern.yyyyMMdd_SDF,
         SDFPattern.MMRdd_SDF,
         SDFPattern.yyyySPMMSPdd_SDF,
         SDFPattern.yyyyRMMRdd_SDF,
