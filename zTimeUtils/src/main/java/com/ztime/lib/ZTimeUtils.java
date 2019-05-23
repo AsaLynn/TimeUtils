@@ -1,10 +1,7 @@
 package com.ztime.lib;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.IntDef;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,6 +16,21 @@ public class ZTimeUtils {
 
     @SuppressLint("SimpleDateFormat")
     private static final SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat();
+
+
+    /**
+     * 判断是否为周末.
+     *
+     * @param stamp 日期时间戳
+     * @return true为周末
+     */
+    public static boolean isWeekend(long stamp) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(stamp));
+        return calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
+                || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
+    }
+
 
     /***
      * 根据当前时间推算dayCount天前或dayCount天后的时间.
@@ -272,16 +284,6 @@ public class ZTimeUtils {
     @Deprecated
     private static SimpleDateFormat s = new SimpleDateFormat("s");
 
-
-//    /**
-//     * 获取当前年月日格式的时间,例如:yyyy-MM-dd
-//     *
-//     * @return 日期时间
-//     */
-//    public static String getCurrentYearMonthDayTime() {
-//        Date curDate = new Date(System.currentTimeMillis());
-//        return yMd.format(curDate);
-//    }
 //
 //    /**
 //     * 获取当前时间是上午还是下午:afternoon,midday,morning
@@ -653,77 +655,5 @@ public class ZTimeUtils {
     private static final int TIME_UNIT_DAY = TIME_UNIT_HOUR * 24;//天
     private static final int TIME_UNIT_YEAR = TIME_UNIT_DAY * 365;//年
 
-//------------------------------------------------------以下为过时的方法和常量,待抛弃--------------------------------------------------------------------//
-
-    /**
-     * 年月日时分
-     *
-     * @param l 时间戳
-     * @return 时间字符串
-     */
-    @Deprecated
-    public static String formatTIme(long l) {
-        return yMdHm.format(l);
-    }
-
-
-    /**
-     * 将时间戳转换为时间
-     *
-     * @param time 时间戳
-     * @return 时间
-     */
-    @Deprecated
-    public static String stampToDate(long time) {
-        String res;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date(time);
-        res = simpleDateFormat.format(date);
-        return res;
-    }
-
-
-    /**
-     * 类型{@link #yMdHmS}:为24小时制日期格式:yyyy-MM-dd HH:mm:ss.
-     */
-    @Deprecated
-    public static final int FORMAT_TYPE_yMdHmS = 10;
-
-    /**
-     * 类型{@link #yMdHm}:为24小时制日期格式:yyyy-MM-dd HH:mm.
-     */
-    @Deprecated
-    public static final int FORMAT_TYPE_yMdHm = 20;
-
-    /**
-     * 类型{@link #yMdHm}:为24小时制日期格式:yyyy.MM.dd HH:mm.
-     */
-    @Deprecated
-    public static final int FORMAT_TYPE_yMdHm_Point = 21;
-
-    /**
-     * 类型{@link #Hm}:为24小时制日期格式:HH:mm.
-     */
-    @Deprecated
-    public static final int FORMAT_TYPE_Hm = 2;
-
-
-    @Deprecated
-    @IntDef({FORMAT_TYPE_yMdHmS, FORMAT_TYPE_yMdHm, FORMAT_TYPE_Hm, FORMAT_TYPE_yMdHm_Point})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface FormatType {
-    }
-
-
-    /**
-     * 年月日时分秒:yyyy-MM-dd HH:mm:ss
-     *
-     * @param l 时间戳
-     * @return 时间字符串
-     */
-    @Deprecated
-    public static String formatTime(long l) {
-        return yMdHmS.format(l);
-    }
 
 }
