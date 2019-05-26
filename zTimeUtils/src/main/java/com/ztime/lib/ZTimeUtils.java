@@ -17,6 +17,23 @@ public class ZTimeUtils {
     @SuppressLint("SimpleDateFormat")
     private static final SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat();
 
+    /**
+     * 使用Calendar获取指定时间格式.
+     *
+     * @param year    年份
+     * @param month   月份
+     * @param date    日期
+     * @param pattern 时间格式
+     * @return 指定格式的时间.
+     */
+    public static String getTimeByCalendar(int year, int month, int date, @PatternType String pattern) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, date);
+        mSimpleDateFormat.applyPattern(pattern);
+        return mSimpleDateFormat.format(calendar.getTime());
+    }
+
+
 
     /**
      * 判断是否为周末.
@@ -284,6 +301,16 @@ public class ZTimeUtils {
     @Deprecated
     private static SimpleDateFormat s = new SimpleDateFormat("s");
 
+
+//    /**
+//     * 获取当前年月日格式的时间,例如:yyyy-MM-dd
+//     *
+//     * @return 日期时间
+//     */
+//    public static String getCurrentYearMonthDayTime() {
+//        Date curDate = new Date(System.currentTimeMillis());
+//        return yMd.format(curDate);
+//    }
 //
 //    /**
 //     * 获取当前时间是上午还是下午:afternoon,midday,morning
