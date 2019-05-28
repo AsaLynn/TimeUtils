@@ -10,6 +10,9 @@ import java.lang.annotation.RetentionPolicy;
  */
 
 @StringDef({
+        SDFPattern.yyyyMMddHHmmssSSS_SDF,
+        SDFPattern.yyyyMMddHHmmss_SDF,
+        SDFPattern.yyyyMMdd_SDF,
         SDFPattern.yyyyMMddHHmm_SDF_RRC,
         SDFPattern.yyyyMMddHH_SDF_RR,
         SDFPattern.yyyyMM_SDF_R,
@@ -27,8 +30,6 @@ import java.lang.annotation.RetentionPolicy;
         SDFPattern.MMddHHmmSS_SDF_MDCC,
         SDFPattern.MdHHmmSS_SDF_MDCC,
         SDFPattern.MdHHmm_SDF_MDC,
-        SDFPattern.yyyyMMddHHmmss_SDF,
-        SDFPattern.yyyyMMdd_SDF,
         SDFPattern.HHmmss_SDF,
         SDFPattern.MMRdd_SDF,
         SDFPattern.yyyySPMMSPdd_SDF,
@@ -36,6 +37,5 @@ import java.lang.annotation.RetentionPolicy;
         SDFPattern.yyyyRMMRddHHCmmCSS_SDF,})
 @Retention(RetentionPolicy.SOURCE)
 public @interface PatternType {
-
 
 }

@@ -10,6 +10,7 @@ import java.util.Locale;
 
 /**
  * 时间工具类--SDFPattern
+ * DateUtils...
  * Created by zxn on 2019/02/19.
  */
 public class ZTimeUtils {
@@ -253,64 +254,10 @@ public class ZTimeUtils {
         return getSeparatedDays(new Date(oldStamp), new Date(newStamp));
     }
 
-    /**
-     * 年月日时分秒,格式为24小时制日期格式:yyyy-MM-dd HH:mm:ss
-     */
-    @Deprecated
-    private static SimpleDateFormat yMdHmS = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-    /**
-     * 年月日时分,格式为24小时制日期格式:yyyy-MM-dd HH:mm
-     */
-    @Deprecated
-    private static SimpleDateFormat yMdHm = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-    /**
-     * 24小时制时分,格式为24小时制日期格式:HH:mm
-     */
-    @Deprecated
-    private static SimpleDateFormat Hm = new SimpleDateFormat("HH:mm");
-
-
-    //年月日
-    @Deprecated
-    private static SimpleDateFormat yMd = new SimpleDateFormat("yyyy-MM-dd");
-
-    //24小时制月日时分
-    @Deprecated
-    private static SimpleDateFormat MdHm = new SimpleDateFormat("MM-dd HH:mm");
-
-
     //12小时制时分
     @Deprecated
     private static SimpleDateFormat hourminuteFormat = new SimpleDateFormat("hh:mm");
 
-    //月日
-    @Deprecated
-    private static SimpleDateFormat Md = new SimpleDateFormat("MM-dd");
-
-    //24小时制时分秒
-    @Deprecated
-    private static SimpleDateFormat hms = new SimpleDateFormat("HH:mm:ss");
-
-    //分秒
-    @Deprecated
-    private static SimpleDateFormat ms = new SimpleDateFormat("mm:ss");
-
-    //秒
-    @Deprecated
-    private static SimpleDateFormat s = new SimpleDateFormat("s");
-
-
-//    /**
-//     * 获取当前年月日格式的时间,例如:yyyy-MM-dd
-//     *
-//     * @return 日期时间
-//     */
-//    public static String getCurrentYearMonthDayTime() {
-//        Date curDate = new Date(System.currentTimeMillis());
-//        return yMd.format(curDate);
-//    }
 //
 //    /**
 //     * 获取当前时间是上午还是下午:afternoon,midday,morning
@@ -466,80 +413,6 @@ public class ZTimeUtils {
         }
     }
 
-    public static String getMinuteTime(long time) {
-        if (time <= 0)
-            return "00:00";
-
-        return ms.format(time);
-    }
-
-    public static String getMinuteTime1(long time) {
-        if (time <= 0)
-            return "0";
-
-        return s.format(time);
-    }
-
-    @Deprecated
-    public static String getTimeForTask(long time) {
-        try {
-            return hms.format(time);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
-
-
-    /**
-     * 红包里用到的时间
-     *
-     * @param stamp 时间戳
-     * @return 日期时间
-     */
-    public static String showFormatTime(long stamp) {
-        String time = "";
-        //当前时间
-        long currentTime = System.currentTimeMillis();
-        //应该分别转换格式对比年月日时分秒
-        String currentFormat = yMdHm.format(currentTime);
-        String stampFormat = yMdHm.format(stamp);
-        //非当年，显示为年月日
-        if (!currentFormat.substring(0, 4).equals(stampFormat.substring(0, 4))) {
-            time = yMd.format(stamp);
-        } else {
-            //当年的先判断是否一个月的
-            if ((stampFormat.substring(5, 7).equals((currentFormat.substring(5, 7))))) {
-                //是一个月的，判断是不是当天的
-                if ((stampFormat.substring(8, 10).equals((currentFormat.substring(8, 10))))) {
-                    //是当天的，显示时分
-                    time = Hm.format(stamp);
-                } else {
-                    //是昨天的，显示为昨天
-//                    if (Integer.parseInt(stampFormat.substring(8, 10)) + 1 == Integer.parseInt(currentFormat.substring(8, 10))) {
-//                        time = "昨天";
-//                    } else {
-                    //不是昨天的,显示月日
-                    time = Md.format(stamp);
-//                    }
-                }
-            } else {
-                //不是一个月，显示月日
-                time = Md.format(stamp);
-            }
-        }
-
-        return time;
-    }
-
-
-    //将当前的月份和日期转换成英文+数字的形式
-    public static String date2en() {
-        long currentTime = System.currentTimeMillis();
-        String currentFormat = Md.format(currentTime);
-        String month = month2en(currentFormat.substring(0, 2));
-        return month + " " + currentFormat.substring(3);
-    }
 
     //月份字符串转换成英文
     public static String month2en(String month) {
@@ -582,57 +455,7 @@ public class ZTimeUtils {
     Long gg = 1000 * 60l, mmax = gg * 60, hmax = mmax * 24, dmax = hmax * 30;
 
 
-    /**
-     * 消息详情页面转换时间的方法
-     * 强制使用12小时制的形式
-     *
-     * @param stamp 多少秒之前接受到的消息
-     * @return 时间
-     */
 
-    public static String changeTimeFormat(long stamp) {
-        String time = "";
-        //当前时间
-        long currentTime = System.currentTimeMillis();
-        //应该分别转换格式对比年月日时分秒
-        String currentFormat = yMdHm.format(currentTime);
-        String stampFormat = yMdHm.format(stamp);
-        //是12小时制
-        //非当年，显示为年月日时分
-        if (!currentFormat.substring(0, 4).equals(stampFormat.substring(0, 4))) {
-            time = currentFormat;
-        } else {
-            //当年的先判断是否一个月的
-            if ((stampFormat.substring(5, 7).equals((currentFormat.substring(5, 7))))) {
-                //是一个月的，判断是不是当天的
-                if ((stampFormat.substring(8, 10).equals((currentFormat.substring(8, 10))))) {
-                    //是当天的，显示凌晨上午下午晚上+时分
-                    if (Integer.parseInt(stampFormat.substring(11, 13)) <= 6) {
-                        time = "凌晨 " + Hm.format(stamp);
-                    } else if (Integer.parseInt(stampFormat.substring(11, 13)) <= 11) {
-                        time = "上午" + hourminuteFormat.format(stamp);
-                    } else if (Integer.parseInt(stampFormat.substring(11, 13)) <= 17) {
-                        time = "下午" + hourminuteFormat.format(stamp);
-                    } else if (Integer.parseInt(stampFormat.substring(11, 13)) <= 24) {
-                        time = "晚上" + hourminuteFormat.format(stamp);
-                    }
-                } else {
-                    //是昨天的，显示为昨天时分
-                    if (Integer.parseInt(stampFormat.substring(8, 10)) + 1 == Integer.parseInt(currentFormat.substring(8, 10))) {
-                        time = "昨天" + Hm.format(stamp);
-                    } else {
-                        //不是昨天的,显示月日时分
-                        time = MdHm.format(stamp);
-                    }
-                }
-            } else {
-                //不是一个月，显示月日时分
-                time = MdHm.format(stamp);
-            }
-        }
-
-        return time;
-    }
 
 
     /**
