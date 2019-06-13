@@ -64,6 +64,19 @@ public class ZTimeUtils {
         return mSimpleDateFormat.format(calendar.getTime());
     }
 
+    /***
+     * 根据指定时间推算dayCount天前或dayCount天后的时间.
+     * @param dayCount  相差的天数.
+     * @return 推算dayCount天前或dayCount天后的时间.
+     */
+    public static String calculateTime(int dayCount, String date, @PatternType String pattern) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(timeToStamp(date, pattern)));
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + dayCount);
+        mSimpleDateFormat.applyPattern(pattern);
+        return mSimpleDateFormat.format(calendar.getTime());
+    }
+
 
     /**
      * 获取当前时间.
