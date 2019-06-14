@@ -7,6 +7,14 @@ package com.ztime.lib;
 public interface SDFPattern {
 
     //SDF_(SP(sprit)-->"/"),(R(rod)-->"-"),(C(colon)-->":"),(Y(year)-->"年"),(M(month)-->"月"),(D(day)-->"日"),(P(point)-->".")
+
+    /**
+     * 年份保留后两位.
+     * 190614154817735
+     * 类型为24小时制日期格式:yyMMddHHmmssSSS.
+     */
+    String yyMMddHHmmssSSS_SDF = "yyMMddHHmmssSSS";
+
     /**
      * 20190403105532000
      * 类型为24小时制日期格式:yyyyMMddHHmmssSSS.
