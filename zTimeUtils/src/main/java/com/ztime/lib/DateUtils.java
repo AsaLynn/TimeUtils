@@ -285,7 +285,22 @@ public class DateUtils {
      * @param pattern   时间格式.
      * @return 返回yearCount年之前的日期.
      */
+    @Deprecated
     public static String calculateTimeByYear(int yearCount, @PatternType String pattern) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) + yearCount);
+        mSimpleDateFormat.applyPattern(pattern);
+        return mSimpleDateFormat.format(calendar.getTime());
+    }
+
+    /**
+     * 根据当前日期往前推算yearCount年前或者yearCount年后的日期.
+     *
+     * @param yearCount 年数,正数往后推算,负数往前推算.
+     * @param pattern   时间格式.
+     * @return 返回yearCount年之前的日期.
+     */
+    public static String calculateDateByYear(int yearCount, @PatternType String pattern) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) + yearCount);
         mSimpleDateFormat.applyPattern(pattern);
