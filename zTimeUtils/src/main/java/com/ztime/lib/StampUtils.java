@@ -52,4 +52,36 @@ public class StampUtils {
         return (System.currentTimeMillis() - stamp) / MillisPatternUnit.SEC_MILLIS;
     }
 
+    /**
+     * 判断是否为同一月
+     *
+     * @param stamp1 时间戳1
+     * @param stamp2 时间戳2
+     * @return boolean
+     */
+    public static boolean isSameMonth(long stamp1, long stamp2) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(stamp1));
+        int month1 = calendar.get(Calendar.MONTH);
+        calendar.setTime(new Date(stamp2));
+        int month2 = calendar.get(Calendar.MONTH);
+        return month1 == month2;
+    }
+
+    /**
+     * 判断是否为同一年
+     *
+     * @param stamp1 时间戳1
+     * @param stamp2 时间戳2
+     * @return boolean
+     */
+    public static boolean isSameYear(long stamp1, long stamp2) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(stamp1));
+        int year1 = calendar.get(Calendar.YEAR);
+        calendar.setTime(new Date(stamp2));
+        int year2 = calendar.get(Calendar.YEAR);
+        return year1 == year2;
+    }
+
 }

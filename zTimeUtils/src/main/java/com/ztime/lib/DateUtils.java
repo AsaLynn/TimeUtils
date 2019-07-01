@@ -255,9 +255,10 @@ public class DateUtils {
 
     /**
      * 判断给定日期是否和今天是同一天.
-     * @param dateText  dateText 给定日期字符串.
-     * @param pattern   时间格式.
-     * @return  true:为同一天.
+     *
+     * @param dateText dateText 给定日期字符串.
+     * @param pattern  时间格式.
+     * @return true:为同一天.
      */
     public static boolean isToday(String dateText, @PatternType String pattern) {
         mSimpleDateFormat.applyPattern(pattern);
@@ -285,8 +286,7 @@ public class DateUtils {
      * @param pattern   时间格式.
      * @return 返回yearCount年之前的日期.
      */
-    @Deprecated
-    public static String calculateTimeByYear(int yearCount, @PatternType String pattern) {
+    public static String calculateDateByYear(int yearCount, @PatternType String pattern) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) + yearCount);
         mSimpleDateFormat.applyPattern(pattern);
@@ -294,16 +294,63 @@ public class DateUtils {
     }
 
     /**
-     * 根据当前日期往前推算yearCount年前或者yearCount年后的日期.
+     * 判断给定日期是否和今天的月份相同
      *
-     * @param yearCount 年数,正数往后推算,负数往前推算.
-     * @param pattern   时间格式.
-     * @return 返回yearCount年之前的日期.
+     * @param dateText dateText 给定日期字符串.
+     * @param pattern  时间格式.
+     * @return true:日期中的月份相同.
      */
-    public static String calculateDateByYear(int yearCount, @PatternType String pattern) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) + yearCount);
+    public static boolean isSameMonth(String dateText, @PatternType String pattern) {
         mSimpleDateFormat.applyPattern(pattern);
-        return mSimpleDateFormat.format(calendar.getTime());
+        Calendar dateCalendar = Calendar.getInstance();
+        try {
+            dateCalendar.setTime(mSimpleDateFormat.parse(dateText));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        int dateMonth = dateCalendar.get(Calendar.MONTH);
+
+        Calendar calendar = Calendar.getInstance();
+        int todayMonth = calendar.get(Calendar.MONTH);
+
+        return dateMonth == todayMonth;
     }
+
+
+    /**
+     * 判断给定日期是否和今天的日子相同(即日子相同但是月份和年份未必相同).
+     *
+     * @param dateText dateText 给定日期字符串.
+     * @param pattern  时间格式.
+     * @return true:日期中的天相同.
+     */
+    public static boolean isSameDay(String dateText, @PatternType String pattern) {
+        mSimpleDateFormat.applyPattern(pattern);
+        Calendar dateCalendar = Calendar.getInstance();
+        try {
+            dateCalendar.setTime(mSimpleDateFormat.parse(dateText));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        int dateDay = dateCalendar.get(Calendar.DAY_OF_MONTH);
+        Calendar calendar = Calendar.getInstance();
+
+        int todayDay = calendar.get(Calendar.DAY_OF_MONTH);
+        return dateDay == todayDay;
+    }
+
+    /**
+     * 判断给定日期是否和今天的月份和天分别相同,可以用作是否是生日判断.
+     *
+     * @param dateText dateText 给定日期字符串.
+     * @param pattern  时间格式.
+     * @return true:日期中的月份和天相同.
+     */
+    public static boolean isSameMonthDay(String dateText, @PatternType String pattern) {
+        return isSameDay(dateText, pattern) && isSameMonth(dateText, pattern);
+    }
+
 }
