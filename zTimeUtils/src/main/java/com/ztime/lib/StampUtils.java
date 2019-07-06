@@ -7,6 +7,19 @@ import java.util.Date;
 public class StampUtils {
 
     /**
+     * 判断是否为周末.
+     *
+     * @param stamp 日期时间戳
+     * @return true为周末
+     */
+    public static boolean isWeekend(long stamp) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(stamp));
+        return calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
+                || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
+    }
+
+    /**
      * 判断时间戳是否为0秒
      *
      * @param stamp 时间戳
@@ -16,6 +29,7 @@ public class StampUtils {
         Date date = new Date(stamp);
         return date.getSeconds() == 0;
     }
+
     /**
      * 判断是否为同一天
      *
@@ -31,6 +45,7 @@ public class StampUtils {
         int day2 = calendar.get(Calendar.DAY_OF_YEAR);
         return day1 == day2;
     }
+
     /**
      * 比较两个时间相差的秒数.
      *

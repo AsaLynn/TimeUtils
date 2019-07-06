@@ -36,20 +36,6 @@ public class ZTimeUtils {
 
 
 
-    /**
-     * 判断是否为周末.
-     *
-     * @param stamp 日期时间戳
-     * @return true为周末
-     */
-    public static boolean isWeekend(long stamp) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date(stamp));
-        return calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
-                || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
-    }
-
-
     /***
      * 根据当前时间推算dayCount天前或dayCount天后的时间.
      * @param dayCount  相差的天数.
