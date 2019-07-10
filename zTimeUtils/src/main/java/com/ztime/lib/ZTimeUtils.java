@@ -35,13 +35,13 @@ public class ZTimeUtils {
     }
 
 
-
     /***
      * 根据当前时间推算dayCount天前或dayCount天后的时间.
      * @param dayCount  相差的天数.
      * @return 推算dayCount天前或dayCount天后的时间.
      * @param pattern 格式
      */
+    @Deprecated
     public static String calculateTime(int dayCount, @PatternType String pattern) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
@@ -89,7 +89,6 @@ public class ZTimeUtils {
     }
 
 
-
     /**
      * 判断时间戳是否为0分
      *
@@ -115,7 +114,6 @@ public class ZTimeUtils {
         int seconds = date.getSeconds();
         return hours == 0 && minutes == 0 && seconds == 0;
     }
-
 
 
     /**
@@ -397,9 +395,6 @@ public class ZTimeUtils {
 
 
     Long gg = 1000 * 60l, mmax = gg * 60, hmax = mmax * 24, dmax = hmax * 30;
-
-
-
 
 
     /**

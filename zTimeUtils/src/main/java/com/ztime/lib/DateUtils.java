@@ -293,6 +293,20 @@ public class DateUtils {
         return mSimpleDateFormat.format(calendar.getTime());
     }
 
+    /***
+     * 根据当前时间推算dayCount天前或dayCount天后的时间.
+     * @param dayCount  相差的天数.
+     * @return 推算dayCount天前或dayCount天后的时间.
+     * @param pattern 格式
+     */
+    public static String calculateDateByDay(int dayCount, @PatternType String pattern) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + dayCount);
+        mSimpleDateFormat.applyPattern(pattern);
+        return mSimpleDateFormat.format(calendar.getTime());
+    }
+
     /**
      * 判断给定日期是否和今天的月份相同
      *
@@ -352,5 +366,7 @@ public class DateUtils {
     public static boolean isSameMonthDay(String dateText, @PatternType String pattern) {
         return isSameDay(dateText, pattern) && isSameMonth(dateText, pattern);
     }
+
+
 
 }
