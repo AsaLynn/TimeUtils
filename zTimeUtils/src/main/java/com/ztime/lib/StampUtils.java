@@ -49,9 +49,9 @@ public class StampUtils {
     /**
      * 比较两个时间相差的秒数.
      *
-     * @param startStamp
-     * @param endStamp
-     * @return
+     * @param startStamp    startStamp
+     * @param endStamp  startStamp
+     * @return  相差的秒数.
      */
     public static long secondsDifference(long startStamp, long endStamp) {
         return (endStamp - startStamp) / MillisPatternUnit.SEC_MILLIS;

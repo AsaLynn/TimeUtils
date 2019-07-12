@@ -51,9 +51,16 @@ public class ZTimeUtils {
     }
 
     /***
+     *
+     * @param dayCount
+     * @return
+     */
+    /**
      * 根据指定时间推算dayCount天前或dayCount天后的时间.
      * @param dayCount  相差的天数.
-     * @return 推算dayCount天前或dayCount天后的时间.
+     * @param date  date
+     * @param pattern   pattern
+     * @return  推算dayCount天前或dayCount天后的时间.
      */
     public static String calculateTime(int dayCount, String date, @PatternType String pattern) {
         Calendar calendar = Calendar.getInstance();

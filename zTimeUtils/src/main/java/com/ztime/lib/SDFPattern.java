@@ -88,11 +88,15 @@ public interface SDFPattern {
      */
     String HHmmSS_SDF_CC = "HH:mm:ss";
 
-
     /**
      * 类型为24小时制日期格式:yyyy.MM.dd HH:mm.
      */
     String yyyyMMddHHmm_SDF_PPC = "yyyy.MM.dd HH:mm";
+
+    /**
+     * 类型为24小时制日期格式:yyyy.MM.dd HH:mm:ss.
+     */
+    String yyyyPMMPddHHCmmCss_SDF= "yyyy.MM.dd HH:mm:ss";
 
 
     /**
