@@ -17,6 +17,39 @@ public class ZTimeUtils {
 
     @SuppressLint("SimpleDateFormat")
     private static final SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat();
+    private static final int TIME_UNIT_SECOND = 1;
+    private static final int TIME_UNIT_MINUTIUE = TIME_UNIT_SECOND * 60;//分钟
+    private static final int TIME_UNIT_HOUR = TIME_UNIT_MINUTIUE * 60;//小时
+
+    /***
+     *
+     * @param dayCount
+     * @return
+     */
+    private static final int TIME_UNIT_DAY = TIME_UNIT_HOUR * 24;//天
+    private static final int TIME_UNIT_YEAR = TIME_UNIT_DAY * 365;//年
+    //12小时制时分
+    @Deprecated
+    private static SimpleDateFormat hourminuteFormat = new SimpleDateFormat("hh:mm");
+    Long gg = 1000 * 60l, mmax = gg * 60, hmax = mmax * 24, dmax = hmax * 30;
+
+    /**
+     * 将给定的时间设置时,分
+     *
+     * @param hour    小时
+     * @param minute   分钟
+     * @param pattern 时间格式
+     * @return 指定格式的时间.
+     */
+    public static String changeTime(String time,@PatternType String pattern,int hour,int minute) {
+        Calendar calendar = Calendar.getInstance();
+        long stamp = timeToStamp(time, pattern);
+        calendar.setTimeInMillis(stamp);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        mSimpleDateFormat.applyPattern(pattern);
+        return mSimpleDateFormat.format(calendar.getTime());
+    }
 
     /**
      * 使用Calendar获取指定时间格式.
@@ -34,7 +67,6 @@ public class ZTimeUtils {
         return mSimpleDateFormat.format(calendar.getTime());
     }
 
-
     /***
      * 根据当前时间推算dayCount天前或dayCount天后的时间.
      * @param dayCount  相差的天数.
@@ -50,17 +82,13 @@ public class ZTimeUtils {
         return mSimpleDateFormat.format(calendar.getTime());
     }
 
-    /***
-     *
-     * @param dayCount
-     * @return
-     */
     /**
      * 根据指定时间推算dayCount天前或dayCount天后的时间.
-     * @param dayCount  相差的天数.
-     * @param date  date
-     * @param pattern   pattern
-     * @return  推算dayCount天前或dayCount天后的时间.
+     *
+     * @param dayCount 相差的天数.
+     * @param date     date
+     * @param pattern  pattern
+     * @return 推算dayCount天前或dayCount天后的时间.
      */
     public static String calculateTime(int dayCount, String date, @PatternType String pattern) {
         Calendar calendar = Calendar.getInstance();
@@ -69,7 +97,6 @@ public class ZTimeUtils {
         mSimpleDateFormat.applyPattern(pattern);
         return mSimpleDateFormat.format(calendar.getTime());
     }
-
 
     /**
      * 获取当前时间.
@@ -94,118 +121,6 @@ public class ZTimeUtils {
         long stamp = timeToStamp(time, oldPattern);
         return stampToTime(stamp, newPattern);
     }
-
-
-    /**
-     * 判断时间戳是否为0分
-     *
-     * @param stamp 时间戳
-     * @return 真
-     */
-    public static boolean isZeroMinute(long stamp) {
-        Date date = new Date(stamp);
-        int minutes = date.getMinutes();
-        return minutes == 0;
-    }
-
-    /**
-     * 判断时间戳是否为0点0分0秒
-     *
-     * @param stamp 时间戳
-     * @return 真
-     */
-    public static boolean isZeroTime(long stamp) {
-        Date date = new Date(stamp);
-        int hours = date.getHours();
-        int minutes = date.getMinutes();
-        int seconds = date.getSeconds();
-        return hours == 0 && minutes == 0 && seconds == 0;
-    }
-
-
-    /**
-     * 将时间戳转换为日期字符串,方法有待完善.
-     *
-     * @param time        时间戳
-     * @param patternType 格式化类型:
-     * @return 格式为yyyy-MM-dd HH:mm:ss的时间字符串.
-     */
-    public static String stampToTime(long time, @PatternType String patternType) {
-        Date date = new Date(time);
-        mSimpleDateFormat.applyPattern(patternType);
-        String res = mSimpleDateFormat.format(date);
-        return res;
-    }
-
-    /**
-     * 将时间字符串转换为时间戳.
-     *
-     * @param time        时间字符串
-     * @param patternType 格式化类型:
-     * @return 时间戳
-     */
-    public static long timeToStamp(String time, @PatternType String patternType) {
-        mSimpleDateFormat.applyPattern(patternType);
-        Date date = null;
-        try {
-            date = mSimpleDateFormat.parse(time);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0l;
-        }
-        return date.getTime();
-    }
-
-
-    /**
-     * 获取两个日期相差的天数.
-     *
-     * @param oldDate 最早日期.
-     * @param newDate 最晚日期.
-     * @return 两个日期相差的天数
-     */
-    public static int getSeparatedDays(Date oldDate, Date newDate) {
-        Calendar oldCalendar = Calendar.getInstance();
-        oldCalendar.setTime(oldDate);
-
-        Calendar newCalendar = Calendar.getInstance();
-        newCalendar.setTime(newDate);
-
-        int oldDay = oldCalendar.get(Calendar.DAY_OF_YEAR);
-        int newDay = newCalendar.get(Calendar.DAY_OF_YEAR);
-
-        int oldYear = oldCalendar.get(Calendar.YEAR);
-        int newYear = newCalendar.get(Calendar.YEAR);
-        if (oldYear != newYear) {//同一年
-            int timeDistance = 0;
-            for (int i = oldYear; i < newYear; i++) {
-                if (i % 4 == 0 && i % 100 != 0 || i % 400 == 0) {    //闰年
-                    timeDistance += 366;
-                } else {  //不是闰年
-                    timeDistance += 365;
-                }
-            }
-            return timeDistance + (newDay - oldDay);
-        } else { //不同年
-            System.out.println("判断day2 - oldDay : " + (newDay - oldDay));
-            return newDay - oldDay;
-        }
-    }
-
-    /**
-     * 比较两个时间戳相差的天数.
-     *
-     * @param oldStamp 毫秒时间戳之前的
-     * @param newStamp 毫秒时间戳之后的
-     * @return 相差的天数
-     */
-    public static int getSeparatedDays(long oldStamp, long newStamp) {
-        return getSeparatedDays(new Date(oldStamp), new Date(newStamp));
-    }
-
-    //12小时制时分
-    @Deprecated
-    private static SimpleDateFormat hourminuteFormat = new SimpleDateFormat("hh:mm");
 
 //
 //    /**
@@ -305,6 +220,111 @@ public class ZTimeUtils {
 //        return currentFormat.substring(0, 2);
 //    }
 
+    /**
+     * 判断时间戳是否为0分
+     *
+     * @param stamp 时间戳
+     * @return 真
+     */
+    public static boolean isZeroMinute(long stamp) {
+        Date date = new Date(stamp);
+        int minutes = date.getMinutes();
+        return minutes == 0;
+    }
+
+    /**
+     * 判断时间戳是否为0点0分0秒
+     *
+     * @param stamp 时间戳
+     * @return 真
+     */
+    public static boolean isZeroTime(long stamp) {
+        Date date = new Date(stamp);
+        int hours = date.getHours();
+        int minutes = date.getMinutes();
+        int seconds = date.getSeconds();
+        return hours == 0 && minutes == 0 && seconds == 0;
+    }
+
+    /**
+     * 将时间戳转换为日期字符串,方法有待完善.
+     *
+     * @param time        时间戳
+     * @param patternType 格式化类型:
+     * @return 格式为yyyy-MM-dd HH:mm:ss的时间字符串.
+     */
+    public static String stampToTime(long time, @PatternType String patternType) {
+        Date date = new Date(time);
+        mSimpleDateFormat.applyPattern(patternType);
+        String res = mSimpleDateFormat.format(date);
+        return res;
+    }
+
+    /**
+     * 将时间字符串转换为时间戳.
+     *
+     * @param time        时间字符串
+     * @param patternType 格式化类型:
+     * @return 时间戳
+     */
+    public static long timeToStamp(String time, @PatternType String patternType) {
+        mSimpleDateFormat.applyPattern(patternType);
+        Date date = null;
+        try {
+            date = mSimpleDateFormat.parse(time);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0l;
+        }
+        return date.getTime();
+    }
+
+    /**
+     * 获取两个日期相差的天数.
+     *
+     * @param oldDate 最早日期.
+     * @param newDate 最晚日期.
+     * @return 两个日期相差的天数
+     */
+    public static int getSeparatedDays(Date oldDate, Date newDate) {
+        Calendar oldCalendar = Calendar.getInstance();
+        oldCalendar.setTime(oldDate);
+
+        Calendar newCalendar = Calendar.getInstance();
+        newCalendar.setTime(newDate);
+
+        int oldDay = oldCalendar.get(Calendar.DAY_OF_YEAR);
+        int newDay = newCalendar.get(Calendar.DAY_OF_YEAR);
+
+        int oldYear = oldCalendar.get(Calendar.YEAR);
+        int newYear = newCalendar.get(Calendar.YEAR);
+        if (oldYear != newYear) {//同一年
+            int timeDistance = 0;
+            for (int i = oldYear; i < newYear; i++) {
+                if (i % 4 == 0 && i % 100 != 0 || i % 400 == 0) {    //闰年
+                    timeDistance += 366;
+                } else {  //不是闰年
+                    timeDistance += 365;
+                }
+            }
+            return timeDistance + (newDay - oldDay);
+        } else { //不同年
+            System.out.println("判断day2 - oldDay : " + (newDay - oldDay));
+            return newDay - oldDay;
+        }
+    }
+
+    /**
+     * 比较两个时间戳相差的天数.
+     *
+     * @param oldStamp 毫秒时间戳之前的
+     * @param newStamp 毫秒时间戳之后的
+     * @return 相差的天数
+     */
+    public static int getSeparatedDays(long oldStamp, long newStamp) {
+        return getSeparatedDays(new Date(oldStamp), new Date(newStamp));
+    }
+
     public static String showTime(long elapsed) {
         String time = "1分钟前";
         if (elapsed > TIME_UNIT_DAY) {
@@ -362,7 +382,6 @@ public class ZTimeUtils {
         }
     }
 
-
     //月份字符串转换成英文
     public static String month2en(String month) {
         String en = "";
@@ -399,10 +418,6 @@ public class ZTimeUtils {
         en = en.substring(0, 3);
         return en;
     }
-
-
-    Long gg = 1000 * 60l, mmax = gg * 60, hmax = mmax * 24, dmax = hmax * 30;
-
 
     /**
      * 倒计时：分：秒
@@ -444,12 +459,6 @@ public class ZTimeUtils {
             return mFormatter.format("%02d:%02d", minutes, seconds).toString();
         }
     }
-
-    private static final int TIME_UNIT_SECOND = 1;
-    private static final int TIME_UNIT_MINUTIUE = TIME_UNIT_SECOND * 60;//分钟
-    private static final int TIME_UNIT_HOUR = TIME_UNIT_MINUTIUE * 60;//小时
-    private static final int TIME_UNIT_DAY = TIME_UNIT_HOUR * 24;//天
-    private static final int TIME_UNIT_YEAR = TIME_UNIT_DAY * 365;//年
 
 
 }
