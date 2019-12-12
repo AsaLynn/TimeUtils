@@ -280,6 +280,33 @@ public class DateUtils {
     }
 
     /**
+     * 判断给定日期是否和昨天是同一天.
+     *
+     * @param dateText dateText 给定日期字符串.
+     * @param pattern  时间格式.
+     * @return true:为同一天.yesterday
+     */
+    public static boolean isYesterday(String dateText, @PatternType String pattern) {
+        mSimpleDateFormat.applyPattern(pattern);
+        Calendar dateCalendar = Calendar.getInstance();
+        try {
+            dateCalendar.setTime(mSimpleDateFormat.parse(dateText));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        int dateYear = dateCalendar.get(Calendar.YEAR);
+        int dateMonth = dateCalendar.get(Calendar.MONTH);
+        int dateDay = dateCalendar.get(Calendar.DAY_OF_MONTH);
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE,   -1);
+        int yesterdayYear = calendar.get(Calendar.YEAR);
+        int yesterdayMonth = calendar.get(Calendar.MONTH);
+        int yesterdayDay = calendar.get(Calendar.DAY_OF_MONTH);
+        return dateYear == yesterdayYear && dateMonth == yesterdayMonth && dateDay == yesterdayDay;
+    }
+
+    /**
      * 根据当前日期往前推算yearCount年前或者yearCount年后的日期.
      *
      * @param yearCount 年数,正数往后推算,负数往前推算.
