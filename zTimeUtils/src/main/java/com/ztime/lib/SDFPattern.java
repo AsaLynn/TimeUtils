@@ -73,6 +73,11 @@ public interface SDFPattern {
 
 
     /**
+     * 类型为24小时制日期格式:
+     */
+    String MMRddHHCmmCSS_SDF = "MM-dd HH:mm:ss";
+
+    /**
      * 类型为24小时制日期格式:MM-dd HH:mm.
      */
     String MMRddHHCmm_SDF = "MM-dd HH:mm";
