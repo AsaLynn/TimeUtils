@@ -1,11 +1,12 @@
 package com.ztime.demo;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.ztime.lib.SDFPattern;
-import com.ztime.lib.ZTimeUtils;
+import com.zxn.time.SDFPattern;
+import com.zxn.time.TimeUtils;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        ZTimeUtils.stampToDate(0, ZTimeUtils.FORMAT_TYPE_yMdHmS);
 
-        String time = ZTimeUtils.timeToTime("20190403105532", SDFPattern.yyyyMMddHHmmss_SDF, SDFPattern.MMRdd_SDF);
+        String time = TimeUtils.timeToTime("20190403105532", SDFPattern.yyyyMMddHHmmss_SDF, SDFPattern.MMRdd_SDF);
 
         Log.i(TAG, "onCreate: -->" + time);
 

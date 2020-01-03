@@ -1,4 +1,4 @@
-package com.ztime.lib;
+package com.zxn.time;
 
 import androidx.annotation.StringDef;
 
