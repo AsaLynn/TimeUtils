@@ -3,16 +3,15 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 android {
-    compileSdkVersion 28
-
+    compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 28
-        versionCode 46
-        versionName "1.4.6"
+        targetSdkVersion 29
+        versionCode 47
+        versionName "1.4.8"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
 
@@ -28,9 +27,9 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+//    testImplementation 'junit:junit:4.12'
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.annotation:annotation:1.1.0'
 }
 
@@ -43,7 +42,7 @@ def libName = "time-utils"
 //发布到组织名称名字，必须填写
 group = "com.zxn.time"
 // 版本号，下次更新是只需要更改版本号即可
-version = "1.4.6"
+version = "1.4.8"
 //上面配置后上传至JCenter后的编译路径是这样的： compile 'com.zxn.time.time-utils:1.0.0'
 //生成源文件
 task sourcesJar(type: Jar) {

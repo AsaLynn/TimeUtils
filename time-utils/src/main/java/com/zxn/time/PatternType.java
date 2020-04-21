@@ -37,6 +37,7 @@ import java.lang.annotation.RetentionPolicy;
         SDFPattern.MMRdd_SDF,
         SDFPattern.yyyySPMMSPdd_SDF,
         SDFPattern.yyyyRMMRdd_SDF,
+        SDFPattern.yyyySPMMSPddHHCmmCSS_SDF,
         SDFPattern.yyyyRMMRddHHCmmCSS_SDF,})
 @Retention(RetentionPolicy.SOURCE)
 public @interface PatternType {
