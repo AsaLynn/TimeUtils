@@ -2,6 +2,8 @@ package com.zxn.time;
 
 import android.annotation.SuppressLint;
 
+import androidx.annotation.IntDef;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,14 +36,79 @@ public class TimeUtils {
     Long gg = 1000 * 60l, mmax = gg * 60, hmax = mmax * 24, dmax = hmax * 30;
 
     /**
+     * 将指定单位的时间值,转化为x小时x分钟,
+     *
+     * @param count         原时间值的数量.
+     * @param inputUnitType 原时间值的单位.
+     * @param outUnitType   最终时间值的单位.
+     * @return 格式为:x小时x分钟的时长.
+     */
+    public static String formatDuration(int count, @TimeUnitType int inputUnitType, @ShowUnitType int outUnitType) {
+        if (inputUnitType == TimeUnitPattern.MILLISECOND) {
+
+        } else if (inputUnitType == TimeUnitPattern.SECOND) {
+            int totalMillis = count * MillisPatternUnit.SEC_MILLIS;
+            int h = totalMillis / MillisPatternUnit.HOUR_MILLIS;
+            int m = (totalMillis % MillisPatternUnit.HOUR_MILLIS / MillisPatternUnit.MIN_MILLIS);
+            int s = (totalMillis % MillisPatternUnit.HOUR_MILLIS % MillisPatternUnit.MIN_MILLIS / MillisPatternUnit.SEC_MILLIS);
+            if (outUnitType == TimeUnitPattern.SECOND_TEXT){
+
+            }else if (outUnitType == TimeUnitPattern.MINUTE_TEXT){
+
+            }else if (outUnitType == TimeUnitPattern.HOUR_TEXT){
+                return h + "小时" + m + "分钟" + s + "秒";
+            }else if (outUnitType == TimeUnitPattern.DAY_TEXT){
+
+            }
+        } else if (inputUnitType == TimeUnitPattern.MINUTE) {
+            int totalMillis = count * MillisPatternUnit.MIN_MILLIS;
+            int h = totalMillis / MillisPatternUnit.HOUR_MILLIS;
+            int m = (totalMillis % MillisPatternUnit.HOUR_MILLIS / MillisPatternUnit.MIN_MILLIS);
+            if (outUnitType == TimeUnitPattern.SECOND_TEXT){
+
+            }else if (outUnitType == TimeUnitPattern.MINUTE_TEXT){
+
+            }else if (outUnitType == TimeUnitPattern.HOUR_TEXT){
+                return h + "小时" + m + "分钟";
+            }else if (outUnitType == TimeUnitPattern.DAY_TEXT){
+
+            }
+        } else if (inputUnitType == TimeUnitPattern.HOUR) {
+
+        } else if (inputUnitType == TimeUnitPattern.DAY) {
+
+        } else if (inputUnitType == TimeUnitPattern.WEEK) {
+
+        } else if (inputUnitType == TimeUnitPattern.MONTH) {//月按30天
+
+        } else if (inputUnitType == TimeUnitPattern.YEAR) {
+
+        }
+        return "";
+    }
+
+//    private static String formatDuration(int outUnitType, int h, int m, int s) {
+//        if (outUnitType == TimeUnitPattern.SECOND_TEXT){
+//
+//        }else if (outUnitType == TimeUnitPattern.MINUTE_TEXT){
+//
+//        }else if (outUnitType == TimeUnitPattern.HOUR_TEXT){
+//
+//        }else if (outUnitType == TimeUnitPattern.DAY_TEXT){
+//
+//        }
+//        return h + "小时" + m + "分钟" + s + "秒";
+//    }
+
+    /**
      * 将给定的时间设置时,分
      *
      * @param hour    小时
-     * @param minute   分钟
+     * @param minute  分钟
      * @param pattern 时间格式
      * @return 指定格式的时间.
      */
-    public static String changeTime(String time,@PatternType String pattern,int hour,int minute) {
+    public static String changeTime(String time, @PatternType String pattern, int hour, int minute) {
         Calendar calendar = Calendar.getInstance();
         long stamp = timeToStamp(time, pattern);
         calendar.setTimeInMillis(stamp);
@@ -359,7 +426,7 @@ public class TimeUtils {
         return time;
     }
 
-    /* 时间戳转换成字符窜 */
+    @Deprecated
     public static String getDateToString(long time) {
         time = time / 1000;
         if (time < 60) {
@@ -444,6 +511,7 @@ public class TimeUtils {
         return time;
     }
 
+    @Deprecated
     public static String stringForTime(long timeMs) {
         long totalSeconds = timeMs / 1000;
 
