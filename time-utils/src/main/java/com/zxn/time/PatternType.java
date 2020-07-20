@@ -10,6 +10,7 @@ import java.lang.annotation.RetentionPolicy;
  */
 
 @StringDef({
+        SDFPattern.yyyyMMddHHmm_SDF,
         SDFPattern.yyyyMMddHHmmssSSS_SDF,
         SDFPattern.MMRddHHCmmCSS_SDF,
         SDFPattern.yyyyPMMPddHHCmmCss_SDF,

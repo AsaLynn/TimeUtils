@@ -28,6 +28,11 @@ public interface SDFPattern {
     String yyyyMMddHHmmss_SDF = "yyyyMMddHHmmss";
 
     /**
+     * 类型为24小时制日期格式:yyyyMMddHHmm.
+     */
+    String yyyyMMddHHmm_SDF = "yyyyMMddHHmm";
+
+    /**
      * 20190523.
      * 类型为24小时制日期格式:yyyyMMdd.
      */
@@ -178,6 +183,5 @@ public interface SDFPattern {
      * 类型为24小时制日期格式:M月d日 HH:mm
      */
     String MdHHmm_SDF_MDC = "M月d日 HH:mm";
-
 
 }
