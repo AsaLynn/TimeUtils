@@ -1,6 +1,7 @@
 package com.zxn.time;
 
 /**
+ * 格式采用后缀的方式.
  * 24小时制时间格式,SDFPattern(SDFPattern12)
  * Created by zxn on 2019/2/28.
  */
@@ -115,6 +116,11 @@ public interface SDFPattern {
     String MMdd_SDF_P = "MM.dd";
 
     /**
+     * 类型为24小时制日期格式:M.d.
+     */
+    String Md_SDF_P = "M.d";
+
+    /**
      * 类型为24小时制日期格式:yyyy.MM.dd.
      */
     String yyyyMMdd_SDF_PP = "yyyy.MM.dd";
@@ -165,6 +171,10 @@ public interface SDFPattern {
      */
     String yyyyMd_SDF_YMD = "yyyy年M月d日";
 
+    /**
+     * 类型为24小时制日期格式:yyyy年M月
+     */
+    String yyyyM_SDF_YM = "yyyy年M月";
 
     /**
      * 类型为24小时制日期格式:MM月dd日
