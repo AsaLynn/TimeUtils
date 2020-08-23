@@ -2,8 +2,6 @@ package com.zxn.time;
 
 import android.annotation.SuppressLint;
 
-import androidx.annotation.IntDef;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,6 +32,33 @@ public class TimeUtils {
     @Deprecated
     private static SimpleDateFormat hourminuteFormat = new SimpleDateFormat("hh:mm");
     Long gg = 1000 * 60l, mmax = gg * 60, hmax = mmax * 24, dmax = hmax * 30;
+
+    /**
+     * 使用Calendar判断指定的时间是否为过去的时间
+     *
+     * @param year  年份
+     * @param month 月份
+     * @param date  日期
+     * @return true:相比现在属于过去的时间
+     */
+    public static boolean isPast(int year, int month, int date) {
+        long inTime = getTimeInMillis(year, month, date);
+        return inTime <= System.currentTimeMillis();
+    }
+
+    /**
+     * 使用Calendar获取指定日期的时间戳
+     *
+     * @param year  年份
+     * @param month 月份
+     * @param date  日期
+     * @return 指定日期的时间戳
+     */
+    public static long getTimeInMillis(int year, int month, int date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, date);
+        return calendar.getTimeInMillis();
+    }
 
     /**
      * 将指定单位的时间值,转化为x小时x分钟,
@@ -87,18 +112,6 @@ public class TimeUtils {
         return "";
     }
 
-//    private static String formatDuration(int outUnitType, int h, int m, int s) {
-//        if (outUnitType == TimeUnitPattern.SECOND_TEXT){
-//
-//        }else if (outUnitType == TimeUnitPattern.MINUTE_TEXT){
-//
-//        }else if (outUnitType == TimeUnitPattern.HOUR_TEXT){
-//
-//        }else if (outUnitType == TimeUnitPattern.DAY_TEXT){
-//
-//        }
-//        return h + "小时" + m + "分钟" + s + "秒";
-//    }
 
     /**
      * 将给定的时间设置时,分
