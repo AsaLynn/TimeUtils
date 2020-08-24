@@ -177,6 +177,11 @@ public interface SDFPattern {
     String yyyyM_SDF_YM = "yyyy年M月";
 
     /**
+     * 类型为24小时制日期格式:yyyy年
+     */
+    String yyyy_SDF_Y = "yyyy年";
+
+    /**
      * 类型为24小时制日期格式:MM月dd日
      */
     String MMdd_SDF_MD = "MM月dd日";
@@ -185,6 +190,11 @@ public interface SDFPattern {
      * 类型为24小时制日期格式:M月d日
      */
     String Md_SDF_MD = "M月d日";
+
+    /**
+     * 类型为24小时制日期格式:M月
+     */
+    String M_SDF_M = "M月";
 
 
     /**

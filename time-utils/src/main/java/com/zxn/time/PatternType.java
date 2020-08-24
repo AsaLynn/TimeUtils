@@ -9,6 +9,8 @@ import java.lang.annotation.RetentionPolicy;
  * Updated by zxn on 2020/8/23.
  */
 @StringDef({
+        SDFPattern.M_SDF_M,
+        SDFPattern.yyyy_SDF_Y,
         SDFPattern.Md_SDF_P,
         SDFPattern.yyyyM_SDF_YM,
         SDFPattern.MMdd_SDF_P,
