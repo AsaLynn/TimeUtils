@@ -55,17 +55,17 @@ public interface SDFPattern {
      * 2019/04/03
      * 类型为24小时制日期格式:yyyy/MM/dd.
      */
-    String yyyySPMMSPdd_SDF = "yyyy/MM/dd";
+    String yyyyMMdd_SDF_SPSP = "yyyy/MM/dd";
 
     /**
      * 类型为24小时制日期格式:yyyy/MM/dd HH:mm:ss.
      */
-    String yyyySPMMSPddHHCmmCSS_SDF = "yyyy/MM/dd HH:mm:ss";
+    String yyyyMMddHHmmSS_SDF_SPSPCC = "yyyy/MM/dd HH:mm:ss";
 
     /**
      * 类型为24小时制日期格式:yyyy-MM-dd HH:mm:ss.
      */
-    String yyyyRMMRddHHCmmCSS_SDF = "yyyy-MM-dd HH:mm:ss";
+    String yyyyMMddHHmmSS_SDF_RRCC = "yyyy-MM-dd HH:mm:ss";
 
     /**
      * 类型为24小时制日期格式:yyyy-MM-dd HH:mm.
@@ -81,7 +81,7 @@ public interface SDFPattern {
     /**
      * 类型为24小时制日期格式:yyyy-MM-dd.
      */
-    String yyyyRMMRdd_SDF = "yyyy-MM-dd";
+    String yyyyMMdd_SDF_RR = "yyyy-MM-dd";
 
     /**
      * 类型为24小时制日期格式:yyyy-MM.
@@ -92,17 +92,17 @@ public interface SDFPattern {
     /**
      * 类型为24小时制日期格式:
      */
-    String MMRddHHCmmCSS_SDF = "MM-dd HH:mm:ss";
+    String MMddHHmmSS_SDF_RCC = "MM-dd HH:mm:ss";
 
     /**
      * 类型为24小时制日期格式:MM-dd HH:mm.
      */
-    String MMRddHHCmm_SDF = "MM-dd HH:mm";
+    String MMddHHmm_SDF_RC = "MM-dd HH:mm";
 
     /**
      * 类型为24小时制日期格式:MM-dd.
      */
-    String MMRdd_SDF = "MM-dd";
+    String MMdd_SDF_R = "MM-dd";
 
 
     /**

@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        ZTimeUtils.stampToDate(0, ZTimeUtils.FORMAT_TYPE_yMdHmS);
 
-        String time = TimeUtils.timeToTime("20190403105532", SDFPattern.yyyyMMddHHmmss_SDF, SDFPattern.MMRdd_SDF);
+        String time = TimeUtils.timeToTime("20190403105532", SDFPattern.yyyyMMddHHmmss_SDF, SDFPattern.MMdd_SDF_R);
 
         Log.i(TAG, "onCreate: -->" + time);
 
