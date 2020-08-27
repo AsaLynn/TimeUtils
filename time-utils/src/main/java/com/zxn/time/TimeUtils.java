@@ -32,6 +32,41 @@ public class TimeUtils {
 
     Long gg = 1000 * 60l, mmax = gg * 60, hmax = mmax * 24, dmax = hmax * 30;
 
+
+    /**
+     * 获取本月的第一天或者最后一天
+     *
+     * @param firstOrLast true : 本月第1天,false : 本月最后一天
+     * @param pattern     PatternType
+     * @return 本月的第一天或者最后一天日期
+     */
+    public static String currentMonthDate(boolean firstOrLast, @PatternType String pattern) {
+        Calendar calendar = Calendar.getInstance();
+        if (firstOrLast) {
+            calendar.set(Calendar.DAY_OF_MONTH, 1);
+        } else {
+            calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DATE));
+        }
+        mSimpleDateFormat.applyPattern(pattern);
+        return mSimpleDateFormat.format(calendar.getTime());
+    }
+
+    /**
+     * 获取本周指定某天的日期.
+     *
+     * @param weekDayType 1: 周日,2: 周一,3: 周二,4: 周三,5: 周四,6: 周五,7: 周六,
+     * @param pattern     PatternType
+     * @return 本周指定某天的日期.
+     */
+    public static String currentWeekDate(@WeekDayType int weekDayType, @PatternType String pattern) {
+        Calendar calendar = Calendar.getInstance();
+        int currentWeekDayType = calendar.get(Calendar.DAY_OF_WEEK);
+        int differCount = weekDayType - currentWeekDayType;
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DATE) + differCount);
+        mSimpleDateFormat.applyPattern(pattern);
+        return mSimpleDateFormat.format(calendar.getTime());
+    }
+
     /**
      * 通过年份和月份 得到当月的总天数
      *
