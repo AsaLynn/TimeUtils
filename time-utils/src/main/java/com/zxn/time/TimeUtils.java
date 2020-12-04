@@ -30,7 +30,7 @@ public class TimeUtils {
 
     private static final int TIME_UNIT_DAY = TIME_UNIT_HOUR * 24;//天
 
-    Long gg = 1000 * 60l, mmax = gg * 60, hmax = mmax * 24, dmax = hmax * 30;
+    Long gg = 1000 * 60L, mmax = gg * 60, hmax = mmax * 24, dmax = hmax * 30;
 
 
     /**

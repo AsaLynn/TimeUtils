@@ -1,10 +1,36 @@
-package com.zxn.time;
+package com.zxn.time
 
+import java.text.DecimalFormat
+import java.util.*
+import kotlin.math.abs
 
-import java.util.Calendar;
-import java.util.Date;
+object StampUtils {
 
-public class StampUtils {
+    /**
+     * 判断给定的时间戳距离现在相差多久
+     * stamp:给定的时间戳
+     * unitType:单位类型
+     * 返回结果保留指定位数的小数点
+     */
+    fun howLong(stamp: Long, @TimeUnitType unitType: Int, format: DecimalFormat? = null): String {
+
+        when (unitType) {
+            TimeUnitPattern.DAY -> {
+                return if (format == null) {
+                    (abs(System.currentTimeMillis() - stamp) / MillisPatternUnit.DAY_MILLIS).toString()
+                } else {//5231687
+                    format.format((abs(System.currentTimeMillis() - stamp) / MillisPatternUnit.DAY_MILLIS.toDouble()))
+                }
+            }
+            else -> {
+                return if (format == null) {
+                    (abs(System.currentTimeMillis() - stamp)).toString()
+                } else {
+                    format.format((abs(System.currentTimeMillis() - stamp)).toDouble())
+                }
+            }
+        }
+    }
 
     /**
      * 判断是否为周末.
@@ -12,11 +38,11 @@ public class StampUtils {
      * @param stamp 日期时间戳
      * @return true为周末
      */
-    public static boolean isWeekend(long stamp) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date(stamp));
-        return calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
-                || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
+    fun isWeekend(stamp: Long): Boolean {
+        val calendar = Calendar.getInstance()
+        calendar.time = Date(stamp)
+        return (calendar[Calendar.DAY_OF_WEEK] == Calendar.SATURDAY
+                || calendar[Calendar.DAY_OF_WEEK] == Calendar.SUNDAY)
     }
 
     /**
@@ -25,9 +51,9 @@ public class StampUtils {
      * @param stamp 时间戳
      * @return 真
      */
-    public static boolean isZeroSecond(long stamp) {
-        Date date = new Date(stamp);
-        return date.getSeconds() == 0;
+    fun isZeroSecond(stamp: Long): Boolean {
+        val date = Date(stamp)
+        return date.seconds == 0
     }
 
     /**
@@ -37,13 +63,13 @@ public class StampUtils {
      * @param time2 时间戳2
      * @return boolean
      */
-    public static boolean isSameDay(long time1, long time2) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date(time1));
-        int day1 = calendar.get(Calendar.DAY_OF_YEAR);
-        calendar.setTime(new Date(time2));
-        int day2 = calendar.get(Calendar.DAY_OF_YEAR);
-        return day1 == day2;
+    fun isSameDay(time1: Long, time2: Long): Boolean {
+        val calendar = Calendar.getInstance()
+        calendar.time = Date(time1)
+        val day1 = calendar[Calendar.DAY_OF_YEAR]
+        calendar.time = Date(time2)
+        val day2 = calendar[Calendar.DAY_OF_YEAR]
+        return day1 == day2
     }
 
     /**
@@ -53,8 +79,8 @@ public class StampUtils {
      * @param endStamp  startStamp
      * @return  相差的秒数.
      */
-    public static long secondsDifference(long startStamp, long endStamp) {
-        return (endStamp - startStamp) / MillisPatternUnit.SEC_MILLIS;
+    fun secondsDifference(startStamp: Long, endStamp: Long): Long {
+        return (endStamp - startStamp) / MillisPatternUnit.SEC_MILLIS
     }
 
     /**
@@ -63,8 +89,8 @@ public class StampUtils {
      * @param stamp
      * @return
      */
-    public static long secondsDifference(long stamp) {
-        return (System.currentTimeMillis() - stamp) / MillisPatternUnit.SEC_MILLIS;
+    fun secondsDifference(stamp: Long): Long {
+        return (System.currentTimeMillis() - stamp) / MillisPatternUnit.SEC_MILLIS
     }
 
     /**
@@ -74,13 +100,13 @@ public class StampUtils {
      * @param stamp2 时间戳2
      * @return boolean
      */
-    public static boolean isSameMonth(long stamp1, long stamp2) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date(stamp1));
-        int month1 = calendar.get(Calendar.MONTH);
-        calendar.setTime(new Date(stamp2));
-        int month2 = calendar.get(Calendar.MONTH);
-        return month1 == month2;
+    fun isSameMonth(stamp1: Long, stamp2: Long): Boolean {
+        val calendar = Calendar.getInstance()
+        calendar.time = Date(stamp1)
+        val month1 = calendar[Calendar.MONTH]
+        calendar.time = Date(stamp2)
+        val month2 = calendar[Calendar.MONTH]
+        return month1 == month2
     }
 
     /**
@@ -90,13 +116,12 @@ public class StampUtils {
      * @param stamp2 时间戳2
      * @return boolean
      */
-    public static boolean isSameYear(long stamp1, long stamp2) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date(stamp1));
-        int year1 = calendar.get(Calendar.YEAR);
-        calendar.setTime(new Date(stamp2));
-        int year2 = calendar.get(Calendar.YEAR);
-        return year1 == year2;
+    fun isSameYear(stamp1: Long, stamp2: Long): Boolean {
+        val calendar = Calendar.getInstance()
+        calendar.time = Date(stamp1)
+        val year1 = calendar[Calendar.YEAR]
+        calendar.time = Date(stamp2)
+        val year2 = calendar[Calendar.YEAR]
+        return year1 == year2
     }
-
 }

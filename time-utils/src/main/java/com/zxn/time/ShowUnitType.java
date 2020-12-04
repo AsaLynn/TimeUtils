@@ -8,7 +8,6 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * Created by zxn on 2020/4/28.
  */
-
 @IntDef({TimeUnitPattern.SECOND_TEXT,
         TimeUnitPattern.MINUTE_TEXT,
         TimeUnitPattern.HOUR_TEXT,
