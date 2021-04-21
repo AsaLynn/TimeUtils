@@ -1,7 +1,10 @@
-# MyTimeUtilsDemo
+# TimeUtils
 一个格式化时间,和时间转换的工具类
 ```
-升级1.6.1:增加时间完善
-implementation 'com.zxn.time:time-utils:1.6.2'
-implementation 'com.zxn.time:time-utils:1.6.0'
+implementation 'com.github.AllenLynn:TimeUtils:1.6.3'
 ```
+
+打标签:
+git tag -a 1.6.3 -m '完善'
+git push origin 1.6.3
+git tag

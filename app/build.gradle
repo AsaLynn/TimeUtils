@@ -27,5 +27,4 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation project(':time-utils')
-    //compile 'com.zxn.time:time-utils:1.4.6'
 }
