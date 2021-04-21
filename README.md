@@ -1,7 +1,7 @@
 # TimeUtils
 一个格式化时间,和时间转换的工具类
 ```
-implementation 'com.github.AllenLynn:TimeUtils:1.6.3'
+implementation 'com.github.AsaLynn:TimeUtils:1.6.3'
 ```
 
 打标签:
